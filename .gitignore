@@ -1,0 +1,46 @@
+# ==========================================
+# Python / Conda Environment
+# ==========================================
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ==========================================
+# Jupyter Notebook checkpoints
+# ==========================================
+.ipynb_checkpoints/
+
+# ==========================================
+# OS / IDE files
+# ==========================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ==========================================
+# Google Drive temp files
+# ==========================================
+.tmp.drivedownload/
+.tmp.driveupload/
+
+# ==========================================
+# Data files (large datasets - optional)
+# ==========================================
+# Uncomment below if your data/ folder has large files you don't want on GitHub
+# data/raw/
+# data/processed/
+# data/external/
+
+# ==========================================
+# Misc
+# ==========================================
+*.log
+*.tmp
+.env

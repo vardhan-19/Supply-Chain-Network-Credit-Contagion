@@ -1,0 +1,23 @@
+name: scncc_env
+channels:
+  - pytorch
+  - pyg
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - networkx
+  - scikit-learn
+  - spacy
+  - yfinance
+  - fastapi
+  - uvicorn
+  - fuzzywuzzy
+  - python-levenshtein
+  - jupyter
+  - ipykernel
+  - pytorch
+  - pyg
+  - nodejs
