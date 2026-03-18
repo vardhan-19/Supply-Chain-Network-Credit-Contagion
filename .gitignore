@@ -31,12 +31,9 @@ Thumbs.db
 .tmp.driveupload/
 
 # ==========================================
-# Data files (large datasets - optional)
+# Node modules (used by md-to-pdf etc.)
 # ==========================================
-# Uncomment below if your data/ folder has large files you don't want on GitHub
-# data/raw/
-# data/processed/
-# data/external/
+node_modules/
 
 # ==========================================
 # Misc
