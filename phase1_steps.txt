@@ -1,0 +1,122 @@
+Viewed SCNCC_Detailed_Roadmap.md:1-800
+Viewed phase1_detailed_guide.md:1-612
+
+Based on the provided [SCNCC_Detailed_Roadmap.md](cci:7://file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/SCNCC_Detailed_Roadmap.md:0:0-0:0) and [phase1_detailed_guide.md](cci:7://file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/phase1_detailed_guide.md:0:0-0:0) documents, I have analyzed the entire project structure and formulated a precise step-by-step execution plan for Phase 1.
+
+### Part 1 & 2: Project Roadmap Analysis (Phases, Dependencies, and I/O)
+
+**1. Phase 1: Setup & Planning (Week 1)**
+*   **Dependencies:** None (Initiation).
+*   **Inputs:** Project roadmaps and requirements.
+*   **Outputs:** Defined Graph Schema `G = (V, E, X, W)`, Target Anchor Company list (`anchor_companies.csv`), Data & Labeling strategies, initialized Git repository + folder structure.
+
+**2. Phase 2: Data Collection & Engineering (Week 2–3)**
+*   **Dependencies:** Requires Phase 1 schema rules and anchor seed list.
+*   **Inputs:** `anchor_companies.csv`, SEC Filings, yfinance API, Private Company Annual Reports.
+*   **Outputs:** Raw/Processed Data (`supply_chain.csv`, `company_financials.csv`), Master Entity Index (UUIDs), SQLite Database w/ Schema, basic FastAPI shell.
+
+**3. Phase 3: Graph Construction & Feature Engineering (Week 3–4)**
+*   **Dependencies:** Requires Phase 2 flat flat CSV arrays and Entity Index to build the relationships.
+*   **Inputs:** `supply_chain.csv`, `company_financials.csv`, Master Entity Index.
+*   **Outputs:** Directed NetworkX Graph `G`, Intrinsic/Extrinsic Feature Matrix `X`, Temporal Edge Weights `W`, Graphical API endpoint (`GET /graph`).
+
+**4. Phase 4: Machine Learning Model (Week 4–6)**
+*   **Dependencies:** Requires the fully formed Phase 3 Graph Topology `A` and Feature Matrices `X/W`.
+*   **Inputs:** Validated NetworkX Graph, Node/Edge Features, `default_labels`.
+*   **Outputs:** Baseline Classifier, Trained Hybrid GNN Stack (GCN/GAT/GraphSAGE), Probability of Default (PD) values, Prediction API (`POST /predict`).
+
+**5. Phase 5: Contagion Simulation & Stress Testing (Week 6–7)**
+*   **Dependencies:** Requires the Phase 4 Trained GNN and static PD baselines.
+*   **Inputs:** Trained GNN Model, Baseline Graph state, Baseline PD predictions.
+*   **Outputs:** SIIS Epidemic Simulation Engine, Shock Protocols (SCR-NR, SCR-ER), Systemic Impact Rankings (Delta PDs).
+
+**6. Phase 6: Dashboards (Week 7–8)**
+*   **Dependencies:** Requires Phase 3 `GET /graph`, Phase 4 `POST /predict`, and Phase 5 Simulation results.
+*   **Inputs:** APIs, Network data, Shock lists.
+*   **Outputs:** Interactive React + WebGL/D3.js risk dashboard.
+
+---
+
+### Part 3: Execution Plan for Phase 1
+
+Here is the discrete, atomic, and strict execution plan to implement [phase1_detailed_guide.md](cci:7://file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/phase1_detailed_guide.md:0:0-0:0) from scratch.
+
+**Step 1**
+1. **Step Name:** Review Roadmaps & Initialize Git Repository
+2. **Objective:** Read foundational context and configure the master version control environment.
+3. **Inputs Required:** [SCNCC_Detailed_Roadmap.md](cci:7://file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/SCNCC_Detailed_Roadmap.md:0:0-0:0), [phase1_detailed_guide.md](cci:7://file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/phase1_detailed_guide.md:0:0-0:0)
+4. **Output Files:** `.gitignore`, `README.md`
+5. **Detailed Instructions:** 
+   *   Read the [.md](cci:7://file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/phase1_detailed_guide.md:0:0-0:0) roadmap before execution of any commands.
+   *   Initialize a Git repository in the project root if it does not already exist.
+   *   Create a `.gitignore` file specifically configured for Python projects (ignoring `__pycache__`, `.env`, `.venv`, `.ipynb_checkpoints`, etc.).
+   *   Create an initial `README.md` with the project title and a brief descriptive header.
+6. **Validation Check:** Running `git status` shows an initialized repository with `.gitignore` and `README.md` ready to be committed.
+
+**Step 2**
+1. **Step Name:** Create Project Folder Structure
+2. **Objective:** Create the required data pipeline and model staging directory tree to ensure precise file routing for all subsequent phases.
+3. **Inputs Required:** [phase1_detailed_guide.md](cci:7://file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/phase1_detailed_guide.md:0:0-0:0) (Section 1.3)
+4. **Output Files:** 13 new directories with `.gitkeep` files (e.g., `data/raw/.gitkeep`, `graph/.gitkeep`, etc.)
+5. **Detailed Instructions:**
+   *   Create the following exact directories in the project root: `data/raw`, `data/processed`, `data/external`, `graph`, `model/baseline`, `model/gnn`, `model/evaluation`, `simulation`, `api`, `frontend`, `notebooks`, `tests`, `docs`.
+   *   Inside each newly created directory, insert an empty `.gitkeep` file to ensure Git tracks the folder structure.
+6. **Validation Check:** Running a tree command verifies that all 13 specified directories exist and each contains a `.gitkeep` file.
+
+**Step 3**
+1. **Step Name:** Establish Branching Strategy
+2. **Objective:** Set up the Git branching model to isolate and protect production code.
+3. **Inputs Required:** None
+4. **Output Files:** Git branch pointer (`dev`)
+5. **Detailed Instructions:**
+   *   Stage and make an initial commit of the `README.md`, `.gitignore`, and folder structure on the `main` branch.
+   *   Create and checkout a new parallel integration branch named `dev` from `main`.
+6. **Validation Check:** Running `git branch` displays `dev` as the current actively highlighted branch.
+
+**Step 4**
+1. **Step Name:** Document Technical Decisions and Architecture
+2. **Objective:** Formalize the structural math, graph rules, and data sources into a localized reference document to prevent assumption drifts in ML engineering.
+3. **Inputs Required:** `phase1_detailed_guide.md` (Sections 2, 4, 5, 6)
+4. **Output Files:** `docs/decisions.md`
+5. **Detailed Instructions:**
+   *   Create a new file at `docs/decisions.md`.
+   *   Extract the Graph Schema definition (`G = (V, E, X, W)`) including the 16 node features, 3 edge types, and edge weight formula and write it into the file.
+   *   Compile the Data Source Evaluation matrix priorities.
+   *   Compile the Default Labeling Strategy formula (Altman Z-Score parameters).
+   *   Note the designated Team Task Split and sprint Sync format.
+6. **Validation Check:** `docs/decisions.md` successfully exists and clearly mirrors the architecture sections required by the Phase 1 docs.
+
+**Step 5**
+1. **Step Name:** Create Anchor Companies Seed File
+2. **Objective:** Generate the raw bootstrap dataset of 30 seed companies designed to power data extraction pipelines in Phase 2.
+3. **Inputs Required:** `phase1_detailed_guide.md` (Section 3.2)
+4. **Output Files:** `data/raw/anchor_companies.csv`
+5. **Detailed Instructions:**
+   *   Create a file at `data/raw/anchor_companies.csv`.
+   *   First row must be the header exact match: `entity_id,name,ticker,country,tier,sector,is_public`
+   *   Transcribe the 30 anchor companies (10 OEMs, 12 Tier 1, 8 Tier 2/Materials) strictly formatted as CSV logic, line by line.
+   *   Ensure the `entity_id` is blank (e.g., `,Toyota Motor,TM,JP,OEM,Automotive,TRUE`).
+6. **Validation Check:** `data/raw/anchor_companies.csv` possesses the correct header row and exactly 30 lines of comma-separated company data.
+
+**Step 6**
+1. **Step Name:** Initialize Supply Chain Relationships Matrix File
+2. **Objective:** Create the preliminary `E` (Edge) list schema required for scraping SEC relationships.
+3. **Inputs Required:** `phase1_detailed_guide.md` (Section 4.2.1)
+4. **Output Files:** `data/raw/supply_chain.csv`
+5. **Detailed Instructions:**
+   *   Create a file at `data/raw/supply_chain.csv`.
+   *   First row must be the exact header: `supplier_name,customer_name,relationship_type,data_source,confidence`
+   *   Optionally insert the two specific Toyota test edges provided directly in Section 4.2 (`Denso Corp` and `Robert Bosch`). Do not invent or scrape new edges in this step.
+6. **Validation Check:** `data/raw/supply_chain.csv` exists, contains the correct 5-parameter header, and is ready for NLP augmentation in Phase 2.
+
+**Step 7**
+1. **Step Name:** Setup Conda Environment File
+2. **Objective:** Lock in system dependencies mapped to Phase 1 specs.
+3. **Inputs Required:** `phase1_detailed_guide.md` (Completion Checklist)
+4. **Output Files:** `environment.yml`
+5. **Detailed Instructions:**
+   *   Create or update `environment.yml` located in the root path.
+   *   Set the root environment name specifically to `scncc`.
+   *   Declare a dependency of Python version `3.10` (or higher).
+   *   Include `pandas`, `yfinance`, `spacy`, `networkx`, and `fastapi` as base package targets mapping to Phase 2/3 tasks.
+6. **Validation Check:** `environment.yml` maps accurately to `scncc` nomenclature with native Python dependencies intact.

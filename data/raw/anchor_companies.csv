@@ -1,0 +1,31 @@
+entity_id,name,ticker,country,tier,sector,is_public
+,Toyota Motor,TM,JP,OEM,Automotive,TRUE
+,Volkswagen Group,VWAGY,DE,OEM,Automotive,TRUE
+,General Motors,GM,US,OEM,Automotive,TRUE
+,Ford Motor,F,US,OEM,Automotive,TRUE
+,Stellantis,STLA,NL,OEM,Automotive,TRUE
+,Honda Motor,HMC,JP,OEM,Automotive,TRUE
+,BMW Group,BMWYY,DE,OEM,Automotive,TRUE
+,Hyundai Motor,HYMTF,KR,OEM,Automotive,TRUE
+,Tesla,TSLA,US,OEM,Automotive,TRUE
+,Nissan Motor,NSANY,JP,OEM,Automotive,TRUE
+,Robert Bosch,,DE,Tier1,Automotive,FALSE
+,Denso Corp,DNZOY,JP,Tier1,Automotive,TRUE
+,ZF Friedrichshafen,,DE,Tier1,Automotive,FALSE
+,Magna International,MGA,CA,Tier1,Automotive,TRUE
+,Continental AG,CTTAY,DE,Tier1,Automotive,TRUE
+,Aisin Corp,ASEKY,JP,Tier1,Automotive,TRUE
+,Lear Corporation,LEA,US,Tier1,Automotive,TRUE
+,Aptiv,APTV,IE,Tier1,Automotive,TRUE
+,BorgWarner,BWA,US,Tier1,Automotive,TRUE
+,Yazaki,,JP,Tier1,Automotive,FALSE
+,Hyundai Mobis,HYUMY,KR,Tier1,Automotive,TRUE
+,Faurecia / Forvia,FURCF,FR,Tier1,Automotive,TRUE
+,CATL,300750.SZ,CN,Tier2,Automotive,TRUE
+,Panasonic Holdings,PCRFY,JP,Tier2,Automotive,TRUE
+,Nucor Steel,NUE,US,Tier2,Automotive,TRUE
+,Alcoa Corp,AA,US,Tier2,Automotive,TRUE
+,TSMC,TSM,TW,Tier2,Automotive,TRUE
+,NXP Semiconductors,NXPI,NL,Tier2,Automotive,TRUE
+,Flex Ltd,FLEX,SG,Tier2,Automotive,TRUE
+,BASF,BASFY,DE,Tier2,Automotive,TRUE

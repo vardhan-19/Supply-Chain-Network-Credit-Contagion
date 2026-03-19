@@ -1,0 +1,3 @@
+supplier_name,customer_name,relationship_type,data_source,confidence
+Denso Corp,Toyota Motor,supply,sec_10k_TM_2024,1.0
+Robert Bosch,Toyota Motor,supply,sec_10k_TM_2024,1.0
