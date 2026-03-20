@@ -1,0 +1,144 @@
+================================================================================
+PHASE 2 EXECUTION PLAN: DATA COLLECTION & ENGINEERING
+================================================================================
+
+Step 1
+Step Name: Read Project Roadmap
+Objective: Read the full roadmap (all phases) to understand overall flow and dependencies before execution.
+Inputs Required: 
+- d:\Supply Chain Network Credit Contagion\SCNCC_Detailed_Roadmap.md
+Output Files: 
+- None (Memory context updated)
+Instructions: Open and read the full roadmap document to understand how Phase 2 fits between Phase 1 and Phase 3. Acknowledge dependencies and the end goal (GNN credit contagion modeling) before progressing.
+Validation Check: Confirm comprehension of the target graph schema (G = (V, E, X, W)).
+
+Step 2
+Step Name: Manual Extraction of Suppliers from SEC 10-K Filings
+Objective: Manually review 10-15 anchor company SEC filings to understand supplier disclosure formats and seed the initial edge list.
+Inputs Required: 
+- d:\Supply Chain Network Credit Contagion\data\raw\anchor_companies.csv
+- Latest SEC 10-K HTML/Text Filings for anchors
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv
+Instructions: Look up the latest SEC 10-K filing for the first 10-15 anchor companies. Read Items 1, 1A, 7, and 8. Search for keywords (e.g., "major supplier"). Extract supplier-customer dyads into an initial raw edge list CSV containing columns: supplier, customer, relationship_type, data_source, confidence, year, notes.
+Validation Check: The raw CSV contains 50-80 correctly formatted edges connecting known anchor OEMs and their Tier 1 suppliers.
+
+Step 3
+Step Name: Initialize FastAPI Application Skeleton
+Objective: Create the foundational web API structure that will host health-checks now and predictive endpoints later. (Can run parallel to extraction)
+Inputs Required: 
+- None
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\api\main.py
+Instructions: Install fastAPI and uvicorn. Create `main.py` inside the `api/` directory. Define a FastAPI app instance with a `/` health check endpoint returning a JSON status object. 
+Validation Check: Running the server via uvicorn and accessing http://localhost:8000/ returns a successful health check.
+
+Step 4
+Step Name: Initialize SQLite Database Schema
+Objective: Create the persistent relational database schema for companies (nodes) and relationships (edges).
+Inputs Required: 
+- d:\Supply Chain Network Credit Contagion\SCNCC_Detailed_Roadmap.md (for schema reference)
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\scncc.db
+- d:\Supply Chain Network Credit Contagion\api\load_data.py
+Instructions: Write SQL statements to create two empty tables (`companies` and `relationships`) matching the exact schema requirements mapping to UUIDs. Create an initial python script `load_data.py` (left templated for now) which will handle loading later.
+Validation Check: `scncc.db` exists in the data directory and SQLite tooling can inspect the empty schema without errors.
+
+Step 5
+Step Name: Semi-Automated NLP Supplier Extraction
+Objective: Scale the extraction of supply chain edges from filings using spaCy NER on isolated 10-K text blocks.
+Inputs Required: 
+- Downloaded SEC 10-K HTML/text files for subsequent companies
+- d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv (Appended)
+Instructions: Convert SEC filings to Markdown. Isolate Items 1, 1A, and 7. Use spaCy NER to extract "ORG" categorized entities explicitly surrounding supply-chain keywords. Review the results manually, dropping false positives before appending valid dyads to the raw supply chain CSV. 
+Validation Check: Raw edge list grows significantly; relationships retain confidence tags differentiating manual vs. NLP origin.
+
+Step 6
+Step Name: Integrate Supplementary Edge Data
+Objective: Fill coverage gaps in SEC data using alternative datasets to capture private and obscure tier suppliers.
+Inputs Required: 
+- Alternative datsets (Kaggle networks, FactSet extracts, private annual reports)
+- d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv (Appended)
+Instructions: Extract additional edge pairs from collected alternative sources. Format identically to the raw SEC extraction format. Append these to the edge list CSV with carefully adjusted `data_source` strings and lower `confidence` scores.
+Validation Check: The raw CSV accurately tracks varied data sources across multi-tier edges.
+
+Step 7
+Step Name: Snowball Graph Expansion
+Objective: Iteratively expand the network from the initial 30 OEMs to a dense target graph of ~300 nodes and ~1,000 edges.
+Inputs Required: 
+- d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv (Expanded)
+Instructions: Extract the unique new company names discovered in Steps 5 and 6. If public, locate their filings/datasets. Repeat Steps 5 and 6 over these newly discovered Tier 1 and Tier 2 suppliers (snowballing). Repeat for 2-3 rounds.
+Validation Check: The raw CSV holds at least 300 unique company names across supplier/customer arrays and roughly ~1,000 total edges.
+
+Step 8
+Step Name: Collect Node Features from yfinance
+Objective: Fetch critical financial metrics for discovered public companies to build the baseline raw node feature matrix.
+Inputs Required: 
+- Unique public company tickers derived from d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\raw\company_financials.csv
+Instructions: Iterate through all identified public stock tickers. Query the yfinance API to fetch intrinsic features: revenue, total_debt, market_cap, current_ratio, debt_to_equity, profit_margin, revenue_growth, interest_coverage, and roa. Save into a new raw financials CSV. Substitute `NaN` for missing data gracefully.
+Validation Check: A newly generated CSV contains distinct columns for each required financial metric for all queried public companies.
+
+Step 9
+Step Name: Compute Altman Z-Score & Assign Default Labels
+Objective: Calculate the default risk proxy for each public company based on their fetched financial metrics.
+Inputs Required: 
+- d:\Supply Chain Network Credit Contagion\data\raw\company_financials.csv
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\raw\company_financials.csv (Updated)
+Instructions: Programmatically calculate the Altman Z-score combining working capital, retained earnings, EBIT, market cap, and revenue. Apply threshold logic: Z <= 1.81 gets `default_label = 1`, otherwise `0`. Append the `altman_z_score` and `default_label` columns.
+Validation Check: Z-scores exist for all valid entries, with roughly 5-15% flagging as distressed (label 1).
+
+Step 10
+Step Name: Manual Extraction of Private Company Financials
+Objective: Patch missing metrics for critical private network nodes (e.g., Bosch, ZF) lacking yfinance data.
+Inputs Required: 
+- Official PDF annual reports for discovered private entities
+- d:\Supply Chain Network Credit Contagion\data\raw\company_financials.csv
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\raw\company_financials.csv (Updated)
+Instructions: Read annual reports for non-public entities. Manually capture revenue, debt, and EBIT parameters. When precise metrics fail, approximate via sector averages. Inject these rows into the financials CSV with `data_confidence` indicating estimation.
+Validation Check: Vital Tier 1 private entities now have corresponding rows populated in the raw financials CSV.
+
+Step 11
+Step Name: Entity Name Resolution & ID Injection
+Objective: Resolve string variants into canonical UUIDs, separating raw data from processed phase 3 graph data.
+Inputs Required: 
+- d:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv
+- d:\Supply Chain Network Credit Contagion\data\raw\company_financials.csv
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\processed\entity_index.json
+- d:\Supply Chain Network Credit Contagion\data\processed\supply_chain.csv
+- d:\Supply Chain Network Credit Contagion\data\processed\company_financials.csv
+Instructions: Apply multi-strategy entity resolution (deterministic normalization, fuzzy matching via token sort, and ticker alignment). Generate a canonical UUID for each true entity and save this map to `entity_index.json`. Use this index to build the processed datasets: populate an `entity_id` column in `company_financials.csv`, and create explicit `supplier_id` and `customer_id` UUID columns in `supply_chain.csv`. 
+Validation Check: Processed datasets strictly substitute raw text names with UUIDs matching `entity_index.json`. No separate subsidiaries are falsely merged.
+
+Step 12
+Step Name: Cross-Dataset Merge & Validation
+Objective: Verify data integrity, checking for orphaned nodes and mismatched relations before allowing structural Phase 3 modeling.
+Inputs Required: 
+- d:\Supply Chain Network Credit Contagion\data\processed\supply_chain.csv
+- d:\Supply Chain Network Credit Contagion\data\processed\company_financials.csv
+Output Files: 
+- None (In-memory validation pass, or console output log)
+Instructions: Programmatically test 4 constraints on the processed files: 1) Referential integrity (all UUIDs in edges exist in financials). 2) Zero orphan nodes (no financials missing edges). 3) UUID duplication check. 4) Global NaN severity (ensure <20% total missing fields). Remediate failures manually or via programmatic pruning.
+Validation Check: Validation script exits successfully without halting assertions.
+
+Step 13
+Step Name: Load Data into SQLite Database
+Objective: Finalize persistent API data infrastructure by loading validated CSVs into the relational database.
+Inputs Required: 
+- d:\Supply Chain Network Credit Contagion\data\processed\supply_chain.csv
+- d:\Supply Chain Network Credit Contagion\data\processed\company_financials.csv
+- d:\Supply Chain Network Credit Contagion\api\load_data.py
+Output Files: 
+- d:\Supply Chain Network Credit Contagion\data\scncc.db (Populated)
+Instructions: Finish writing the `load_data.py` script so that it reads the processed CSVs and performs parameter-bound `INSERT` queries into `companies` and `relationships` tables, utilizing the `entity_id` UUIDs for primary/foreign keys. Run the load script.
+Validation Check: Performing SQL `SELECT COUNT(*)` yields identically matching row counts to the Phase 3 ready datasets.

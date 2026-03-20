@@ -1,3 +1,55 @@
-supplier_name,customer_name,relationship_type,data_source,confidence
-Denso Corp,Toyota Motor,supply,sec_10k_TM_2024,1.0
-Robert Bosch,Toyota Motor,supply,sec_10k_TM_2024,1.0
+supplier,customer,relationship_type,data_source,confidence,year,notes
+Denso Corp,Toyota Motor,supply,sec_10k_TM_2024,1.0,2024,manual_stub
+Robert Bosch,Toyota Motor,supply,sec_10k_TM_2024,1.0,2024,manual_stub
+Aptiv,General Motors,tier1_supplier,sec_10k_GM_2025,0.85,2025,"[KW:manufactured by] in that proceeding. In August 2023, the same U.S. court granted class certification as to a Louisiana claim, but denied certifica"
+LG Energy Solution,General Motors,tier1_supplier,sec_10k_GM_2025,0.7,2025,"[KW:supply chain] ur strong market position with ICE vehicles in the U.S. and the success of our Chevrolet, Cadillac, and GMC EVs with customers. We a"
+Novelis,Ford Motor,raw_material_supplier,sec_10k_F_2025,0.85,2025,"[KW:supply chain] usiness, see the Outlook section on page 74 of this Report and Item 1A. Risk Factors. Production and Supply Chain. Market volatility"
+Panasonic Holdings,Tesla,tier2_supplier_battery,sec_10k_TSLA_2025,0.85,2025,"[KW:manufactured by]  our business according to our plans. Currently, we rely on suppliers such as Panasonic and Contemporary Amperex Technology Co. L"
+CATL,Tesla,tier2_supplier_battery,sec_10k_TSLA_2025,0.85,2025,"[KW:manufactured by]  our business according to our plans. Currently, we rely on suppliers such as Panasonic and Contemporary Amperex Technology Co. L"
+Ford Motor,Aptiv,tier1_supplier,sec_10k_APTV_2025,0.7,2025,"[KW:significant supplier] September 2023, lasting more than six weeks in duration. As GM, Ford and Stellantis are among our largest customers, these l"
+General Motors,Aptiv,tier1_supplier,sec_10k_APTV_2025,0.7,2025,"[KW:significant supplier] September 2023, lasting more than six weeks in duration. As GM, Ford and Stellantis are among our largest customers, these l"
+Stellantis,Aptiv,tier1_supplier,sec_10k_APTV_2025,0.7,2025,"[KW:significant supplier] September 2023, lasting more than six weeks in duration. As GM, Ford and Stellantis are among our largest customers, these l"
+Aptiv,Lear Corporation,tier1_supplier,sec_10k_APTV_2025,0.8,2025,[KW:largest customer] Gentex Corporation • Harman International (a subsidiary of Samsung Electronics) • Mobileye • Nutanix • Red Hat • Valeo Engineere
+Aptiv,Yazaki,tier1_supplier,sec_10k_APTV_2025,0.8,2025,[KW:largest customer] Gentex Corporation • Harman International (a subsidiary of Samsung Electronics) • Mobileye • Nutanix • Red Hat • Valeo Engineere
+Aptiv,Valeo,tier1_supplier,sec_10k_APTV_2025,0.8,2025,[KW:largest customer] Gentex Corporation • Harman International (a subsidiary of Samsung Electronics) • Mobileye • Nutanix • Red Hat • Valeo Engineere
+Aptiv,Gentex Corporation,tier1_supplier,sec_10k_APTV_2025,0.8,2025,[KW:largest customer] Gentex Corporation • Harman International (a subsidiary of Samsung Electronics) • Mobileye • Nutanix • Red Hat • Valeo Engineere
+Aptiv,TE Connectivity,tier1_supplier,sec_10k_APTV_2025,0.8,2025,[KW:largest customer] Gentex Corporation • Harman International (a subsidiary of Samsung Electronics) • Mobileye • Nutanix • Red Hat • Valeo Engineere
+Aptiv,Amphenol Corp,tier1_supplier,sec_10k_APTV_2025,0.8,2025,[KW:largest customer] Gentex Corporation • Harman International (a subsidiary of Samsung Electronics) • Mobileye • Nutanix • Red Hat • Valeo Engineere
+Aptiv,Mobileye,tier1_supplier,sec_10k_APTV_2025,0.8,2025,[KW:largest customer] Gentex Corporation • Harman International (a subsidiary of Samsung Electronics) • Mobileye • Nutanix • Red Hat • Valeo Engineere
+Aptiv,Ford Motor,tier1_supplier,sec_10k_APTV_2025,0.8,2025,"[KW:largest customer] ich the Company generates its revenue), reflecting increased vehicle production of 10% in China and 1% in South America, our sma"
+Aptiv,Stellantis,tier1_supplier,sec_10k_APTV_2025,0.8,2025,"[KW:largest customer] ich the Company generates its revenue), reflecting increased vehicle production of 10% in China and 1% in South America, our sma"
+Aptiv,Robert Bosch,tier1_supplier,sec_10k_APTV_2025,0.8,2025,"[KW:our customer] intelligent systems software, automated driving and mobility solutions, which has attracted competitors from outside the traditional"
+Aptiv,Denso Corp,tier1_supplier,sec_10k_APTV_2025,0.8,2025,"[KW:our customer] intelligent systems software, automated driving and mobility solutions, which has attracted competitors from outside the traditional"
+Ford Motor,BorgWarner,raw_material_supplier,sec_10k_BWA_2025,0.85,2025,"[KW:supply agreement] sidiaries) were approximately as follows: Year Ended December 31, Customer 2025 2024 2023 Volkswagen 13 % 10 % 11 % Ford 12 % 13"
+Volkswagen Group,BorgWarner,raw_material_supplier,sec_10k_BWA_2025,0.85,2025,"[KW:supply agreement] sidiaries) were approximately as follows: Year Ended December 31, Customer 2025 2024 2023 Volkswagen 13 % 10 % 11 % Ford 12 % 13"
+BorgWarner,Ford Motor,tier1_supplier,sec_10k_BWA_2025,0.8,2025,"[KW:major customer] s, including non-renewal of purchase orders, a customer's financial hardship or other unforeseen reasons, it could adversely affec"
+BorgWarner,Volkswagen Group,tier1_supplier,sec_10k_BWA_2025,0.8,2025,"[KW:major customer] s, including non-renewal of purchase orders, a customer's financial hardship or other unforeseen reasons, it could adversely affec"
+BorgWarner,General Motors,tier1_supplier,sec_10k_BWA_2025,0.8,2025,"[KW:major customer] ely. Sales to the Company’s top ten customers represented 71% of sales for the year ended December 31, 2025. Changes in our busine"
+BorgWarner,Stellantis,tier1_supplier,sec_10k_BWA_2025,0.8,2025,"[KW:major customer] ely. Sales to the Company’s top ten customers represented 71% of sales for the year ended December 31, 2025. Changes in our busine"
+Hyundai Motor,Lear Corporation,tier1_supplier,sec_10k_LEA_2025,0.7,2025,"[KW:major customer] Hyundai Transys Lear Automotive India Private Limited 35 20 Table of Contents ITEM 1A – RISK FACTORS Our business, financial condi"
+Lear Corporation,Ford Motor,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:major customer] Germany 1,175.3 1,364.4 1,402.2 Morocco 1,297.4 1,219.8 1,085.8 Other countries 8,894.7 9,028.2 9,635.8 Total $ 23,259.1 $ 23,306."
+Lear Corporation,General Motors,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:major customer] Germany 1,175.3 1,364.4 1,402.2 Morocco 1,297.4 1,219.8 1,085.8 Other countries 8,894.7 9,028.2 9,635.8 Total $ 23,259.1 $ 23,306."
+Lear Corporation,Volkswagen Group,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:major customer] Germany 1,175.3 1,364.4 1,402.2 Morocco 1,297.4 1,219.8 1,085.8 Other countries 8,894.7 9,028.2 9,635.8 Total $ 23,259.1 $ 23,306."
+Lear Corporation,Stellantis,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:major customer] Germany 1,175.3 1,364.4 1,402.2 Morocco 1,297.4 1,219.8 1,085.8 Other countries 8,894.7 9,028.2 9,635.8 Total $ 23,259.1 $ 23,306."
+Lear Corporation,Volvo Cars,tier1_supplier,sec_10k_LEA_2025,0.8,2025,[KW:our customer]  unique processes and people-focused culture provide us with a sustainable global competitive advantage. Our 2025 acquisition of Sto
+Lear Corporation,Geely Auto,tier1_supplier,sec_10k_LEA_2025,0.8,2025,[KW:our customer]  unique processes and people-focused culture provide us with a sustainable global competitive advantage. Our 2025 acquisition of Sto
+Lear Corporation,Aptiv,tier1_supplier,sec_10k_LEA_2025,0.8,2025,[KW:our customer]  unique processes and people-focused culture provide us with a sustainable global competitive advantage. Our 2025 acquisition of Sto
+Lear Corporation,Yazaki,tier1_supplier,sec_10k_LEA_2025,0.8,2025,[KW:our customer]  unique processes and people-focused culture provide us with a sustainable global competitive advantage. Our 2025 acquisition of Sto
+Lear Corporation,TE Connectivity,tier1_supplier,sec_10k_LEA_2025,0.8,2025,[KW:our customer]  unique processes and people-focused culture provide us with a sustainable global competitive advantage. Our 2025 acquisition of Sto
+Lear Corporation,Panasonic Holdings,tier1_supplier,sec_10k_LEA_2025,0.8,2025,[KW:our customer]  unique processes and people-focused culture provide us with a sustainable global competitive advantage. Our 2025 acquisition of Sto
+Lear Corporation,Robert Bosch,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:our customer] ompetitors in electronic controllers include Aumovio SE, Aptiv PLC, Denso Corporation, Harman International Industries, Incorporated"
+Lear Corporation,Denso Corp,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:our customer] ompetitors in electronic controllers include Aumovio SE, Aptiv PLC, Denso Corporation, Harman International Industries, Incorporated"
+Lear Corporation,Faurecia / Forvia,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:our customer] ompetitors in electronic controllers include Aumovio SE, Aptiv PLC, Denso Corporation, Harman International Industries, Incorporated"
+Lear Corporation,Valeo,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:our customer] ompetitors in electronic controllers include Aumovio SE, Aptiv PLC, Denso Corporation, Harman International Industries, Incorporated"
+Lear Corporation,Visteon Corporation,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:our customer] ompetitors in electronic controllers include Aumovio SE, Aptiv PLC, Denso Corporation, Harman International Industries, Incorporated"
+Lear Corporation,Motherson Group,tier1_supplier,sec_10k_LEA_2025,0.8,2025,"[KW:our customer] ompetitors in electronic controllers include Aumovio SE, Aptiv PLC, Denso Corporation, Harman International Industries, Incorporated"
+TSMC,NXP Semiconductors,tier2_supplier_semiconductor,sec_20f_NXPI_2018,0.85,2018,"[KW:raw material] odules, Standard Logic Kuala Lumpur, Malaysia 100 % — — Micro-processors, Micro-controllers, Power Management, Analog and Mixed Sign"
+NXP Semiconductors,Robert Bosch,tier1_supplier,sec_20f_NXPI_2018,0.8,2018,"[KW:our customer]  sales and marketing strategy focuses on key defined verticals in Automotive, Mobile, Industrial and IoT and Communication Infrastru"
+NXP Semiconductors,Denso Corp,tier1_supplier,sec_20f_NXPI_2018,0.8,2018,"[KW:our customer]  sales and marketing strategy focuses on key defined verticals in Automotive, Mobile, Industrial and IoT and Communication Infrastru"
+NXP Semiconductors,Continental AG,tier1_supplier,sec_20f_NXPI_2018,0.8,2018,"[KW:our customer]  sales and marketing strategy focuses on key defined verticals in Automotive, Mobile, Industrial and IoT and Communication Infrastru"
+NXP Semiconductors,Aptiv,tier1_supplier,sec_20f_NXPI_2018,0.8,2018,"[KW:our customer]  sales and marketing strategy focuses on key defined verticals in Automotive, Mobile, Industrial and IoT and Communication Infrastru"
+NXP Semiconductors,Visteon Corporation,tier1_supplier,sec_20f_NXPI_2018,0.8,2018,"[KW:our customer]  sales and marketing strategy focuses on key defined verticals in Automotive, Mobile, Industrial and IoT and Communication Infrastru"
+Nucor Steel,Steel Technologies,tier1_supplier,sec_10k_NUE_2025,0.8,2025,"[KW:our customer] cars, refinery tanks, ships, wind towers and other items. Our products are further used in the pipe and tube, pressure vessel, trans"
+GM Financial,General Motors,tier1_supplier,sec_10k_GM_2025,0.7,2025,[NLP:sole source] uired to hold certain funds in restricted cash accounts to provide additional collateral for borrowings under certain secured credit facilities. GM Fi
+GM Financial's,General Motors,tier1_supplier,sec_10k_GM_2025,0.7,2025,[NLP:sole source] uired to hold certain funds in restricted cash accounts to provide additional collateral for borrowings under certain secured credit facilities. GM Fi
+

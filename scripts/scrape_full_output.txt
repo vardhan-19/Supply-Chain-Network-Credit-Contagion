@@ -1,0 +1,143 @@
+﻿====================================================================
+SEC EDGAR 10-K Supplier Extraction  |  Phase 2, Step 2
+====================================================================
+
+[GM]  General Motors  (CIK: 1467858)
+  Filing : 0001467858-26-000013  |  Period: 2025-12-31
+  Doc    : gm-20251231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/1467858/000146785826000013/gm-20251231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 139
+  Relationships extracted: 2
+    [tier1_supplier                ]  Aptiv                      ->  General Motors
+    [tier1_supplier                ]  LG Energy Solution         ->  General Motors
+
+[F]  Ford Motor  (CIK: 37996)
+  Filing : 0000037996-26-000015  |  Period: 2025-12-31
+  Doc    : f-20251231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 179
+  Relationships extracted: 1
+    [raw_material_supplier         ]  Novelis                    ->  Ford Motor
+
+[TSLA]  Tesla  (CIK: 1318605)
+  Filing : 0001628280-26-003952  |  Period: 2025-12-31
+  Doc    : tsla-20251231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 107
+  Relationships extracted: 2
+    [tier2_supplier_battery        ]  Panasonic Holdings         ->  Tesla
+    [tier2_supplier_battery        ]  CATL                       ->  Tesla
+
+[APTV]  Aptiv  (CIK: 1521332)
+  Filing : 0001521332-26-000009  |  Period: 2025-12-31
+  Doc    : aptv-20251231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 227
+  Relationships extracted: 15
+    [tier1_supplier                ]  Ford Motor                 ->  Aptiv
+    [tier1_supplier                ]  General Motors             ->  Aptiv
+    [tier1_supplier                ]  Stellantis                 ->  Aptiv
+    [tier1_supplier                ]  Aptiv                      ->  Lear Corporation
+    [tier1_supplier                ]  Aptiv                      ->  Yazaki
+    [tier1_supplier                ]  Aptiv                      ->  Valeo
+    [tier1_supplier                ]  Aptiv                      ->  Gentex Corporation
+    [tier1_supplier                ]  Aptiv                      ->  TE Connectivity
+    [tier1_supplier                ]  Aptiv                      ->  Amphenol Corp
+    [tier1_supplier                ]  Aptiv                      ->  Mobileye
+    [tier1_supplier                ]  Aptiv                      ->  General Motors
+    [tier1_supplier                ]  Aptiv                      ->  Ford Motor
+    [tier1_supplier                ]  Aptiv                      ->  Stellantis
+    [tier1_supplier                ]  Aptiv                      ->  Robert Bosch
+    [tier1_supplier                ]  Aptiv                      ->  Denso Corp
+
+[BWA]  BorgWarner  (CIK: 908255)
+  Filing : 0000908255-26-000011  |  Period: 2025-12-31
+  Doc    : bwa-20251231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/908255/000090825526000011/bwa-20251231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 89
+  Relationships extracted: 6
+    [raw_material_supplier         ]  Ford Motor                 ->  BorgWarner
+    [raw_material_supplier         ]  Volkswagen Group           ->  BorgWarner
+    [tier1_supplier                ]  BorgWarner                 ->  Ford Motor
+    [tier1_supplier                ]  BorgWarner                 ->  Volkswagen Group
+    [tier1_supplier                ]  BorgWarner                 ->  General Motors
+    [tier1_supplier                ]  BorgWarner                 ->  Stellantis
+
+[LEA]  Lear Corporation  (CIK: 842162)
+  Filing : 0000842162-26-000011  |  Period: 2025-12-31
+  Doc    : lear-20251231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 226
+  Relationships extracted: 17
+    [tier1_supplier                ]  Hyundai Motor              ->  Lear Corporation
+    [tier1_supplier                ]  Lear Corporation           ->  Ford Motor
+    [tier1_supplier                ]  Lear Corporation           ->  General Motors
+    [tier1_supplier                ]  Lear Corporation           ->  Volkswagen Group
+    [tier1_supplier                ]  Lear Corporation           ->  Stellantis
+    [tier1_supplier                ]  Lear Corporation           ->  Volvo Cars
+    [tier1_supplier                ]  Lear Corporation           ->  Geely Auto
+    [tier1_supplier                ]  Lear Corporation           ->  Aptiv
+    [tier1_supplier                ]  Lear Corporation           ->  Yazaki
+    [tier1_supplier                ]  Lear Corporation           ->  TE Connectivity
+    [tier1_supplier                ]  Lear Corporation           ->  Panasonic Holdings
+    [tier1_supplier                ]  Lear Corporation           ->  Robert Bosch
+    [tier1_supplier                ]  Lear Corporation           ->  Denso Corp
+    [tier1_supplier                ]  Lear Corporation           ->  Faurecia / Forvia
+    [tier1_supplier                ]  Lear Corporation           ->  Valeo
+    [tier1_supplier                ]  Lear Corporation           ->  Visteon Corporation
+    [tier1_supplier                ]  Lear Corporation           ->  Motherson Group
+
+[MGA]  Magna International  (CIK: 1141924)
+    [ERROR] Submissions API failed: 404 Client Error: Not Found for url: https://data.sec.gov/submissions/CIK0001141924.json
+  [SKIP] Could not retrieve filing metadata
+
+[NXPI]  NXP Semiconductors  (CIK: 1413447)
+  Filing : 0001564590-19-005657  |  Period: 2018-12-31
+  Doc    : nxpi-20f_20181231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/1413447/000156459019005657/nxpi-20f_20181231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 82
+  Relationships extracted: 6
+    [tier2_supplier_semiconductor  ]  TSMC                       ->  NXP Semiconductors
+    [tier1_supplier                ]  NXP Semiconductors         ->  Robert Bosch
+    [tier1_supplier                ]  NXP Semiconductors         ->  Denso Corp
+    [tier1_supplier                ]  NXP Semiconductors         ->  Continental AG
+    [tier1_supplier                ]  NXP Semiconductors         ->  Aptiv
+    [tier1_supplier                ]  NXP Semiconductors         ->  Visteon Corporation
+
+[NUE]  Nucor Steel  (CIK: 73309)
+  Filing : 0001193125-26-071575  |  Period: 2025-12-31
+  Doc    : nue-20251231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/73309/000119312526071575/nue-20251231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 153
+  Relationships extracted: 1
+    [tier1_supplier                ]  Nucor Steel                ->  Steel Technologies
+
+[AA]  Alcoa Corp  (CIK: 1675149)
+  Filing : 0001193125-26-077167  |  Period: 2025-12-31
+  Doc    : aa-20251231.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/1675149/000119312526077167/aa-20251231.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 114
+  Relationships extracted: 0
+
+[FLEX]  Flex Ltd  (CIK: 866374)
+  Filing : 0000866374-25-000027  |  Period: 2025-03-31
+  Doc    : flex-20250331.htm
+  URL    : https://www.sec.gov/Archives/edgar/data/866374/000086637425000027/flex-20250331.htm
+  Downloading 10-K (this may take 15-60 seconds for large filings)...
+  Keyword snippets found: 238
+  Relationships extracted: 0
+
+====================================================================
+Total relationships from this run: 50
+
+  CSV written: 51 total rows (47 new + 4 preserved)
+Done! Added 47 new edges to D:\Supply Chain Network Credit Contagion\data\raw\supply_chain.csv
