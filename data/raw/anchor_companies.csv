@@ -1,31 +1,187 @@
 entity_id,name,ticker,country,tier,sector,is_public
-,Toyota Motor,TM,JP,OEM,Automotive,TRUE
-,Volkswagen Group,VWAGY,DE,OEM,Automotive,TRUE
-,General Motors,GM,US,OEM,Automotive,TRUE
-,Ford Motor,F,US,OEM,Automotive,TRUE
-,Stellantis,STLA,NL,OEM,Automotive,TRUE
-,Honda Motor,HMC,JP,OEM,Automotive,TRUE
-,BMW Group,BMWYY,DE,OEM,Automotive,TRUE
-,Hyundai Motor,HYMTF,KR,OEM,Automotive,TRUE
-,Tesla,TSLA,US,OEM,Automotive,TRUE
-,Nissan Motor,NSANY,JP,OEM,Automotive,TRUE
-,Robert Bosch,,DE,Tier1,Automotive,FALSE
-,Denso Corp,DNZOY,JP,Tier1,Automotive,TRUE
-,ZF Friedrichshafen,,DE,Tier1,Automotive,FALSE
-,Magna International,MGA,CA,Tier1,Automotive,TRUE
-,Continental AG,CTTAY,DE,Tier1,Automotive,TRUE
-,Aisin Corp,ASEKY,JP,Tier1,Automotive,TRUE
-,Lear Corporation,LEA,US,Tier1,Automotive,TRUE
-,Aptiv,APTV,IE,Tier1,Automotive,TRUE
-,BorgWarner,BWA,US,Tier1,Automotive,TRUE
-,Yazaki,,JP,Tier1,Automotive,FALSE
-,Hyundai Mobis,HYUMY,KR,Tier1,Automotive,TRUE
-,Faurecia / Forvia,FURCF,FR,Tier1,Automotive,TRUE
-,CATL,300750.SZ,CN,Tier2,Automotive,TRUE
-,Panasonic Holdings,PCRFY,JP,Tier2,Automotive,TRUE
-,Nucor Steel,NUE,US,Tier2,Automotive,TRUE
-,Alcoa Corp,AA,US,Tier2,Automotive,TRUE
-,TSMC,TSM,TW,Tier2,Automotive,TRUE
-,NXP Semiconductors,NXPI,NL,Tier2,Automotive,TRUE
-,Flex Ltd,FLEX,SG,Tier2,Automotive,TRUE
-,BASF,BASFY,DE,Tier2,Automotive,TRUE
+,Adient,ADNT,IE,Tier1,Automotive,True
+,Aisin Corp,ASEKY,JP,Tier1,Automotive,True
+,Aisin Seiki,7259.T,JP,Tier1,Automotive,True
+,Albemarle Corp,ALB,US,Tier3,Automotive,True
+,Alcoa Corp,AA,US,Tier2,Automotive,True
+,Alcoa Fastening Systems,,US,Tier2,Automotive,False
+,Alfa Romeo,,Global,Tier3,Automotive,False
+,Alibaba,,Global,Tier3,Automotive,False
+,Alpine,,Global,Tier3,Automotive,False
+,American Axle,AXL,US,Tier1,Automotive,True
+,Ampere,,Global,Tier3,Automotive,False
+,Amphenol Corp,APH,US,Tier1,Automotive,True
+,Aptiv,APTV,IE,Tier1,Automotive,True
+,ArcelorMittal,MT,LU,Tier3,Automotive,True
+,Aston Martin,AML.L,GB,OEM,Automotive,True
+,Audi AG,,Global,Tier3,Automotive,False
+,Autoliv,ALV,SE,Tier1,Automotive,True
+,BAIC Group,,Global,Tier3,Automotive,False
+,BASF,BASFY,DE,Tier2,Automotive,True
+,BASF Coatings,,DE,Tier2,Automotive,False
+,Bentley Motors,,Global,Tier3,Automotive,False
+,BMW Brilliance,,Global,Tier3,Automotive,False
+,BMW Financial Services,,DE,OEM,Automotive,False
+,BMW Group,BMWYY,DE,OEM,Automotive,True
+,BorgWarner,BWA,US,Tier1,Automotive,True
+,BorgWarner PowerDrive,,US,Tier1,Automotive,False
+,Boston Dynamics,,Global,Tier3,Automotive,False
+,BPIfrance,,Global,Tier3,Automotive,False
+,Brembo,BRE.MI,IT,Tier1,Automotive,TRUE
+,Bridgestone,5108.T,JP,Tier1,Automotive,True
+,Bugatti Rimac,,Global,Tier3,Automotive,False
+,Buick,,Global,Tier3,Automotive,False
+,BYD Company,1211.HK,CN,OEM,Automotive,True
+,Cadillac,,Global,Tier3,Automotive,False
+,CATL,300750.SZ,CN,Tier2,Automotive,True
+,Changan Automobile,000625.SZ,CN,OEM,Automotive,True
+,Chevrolet,,Global,Tier3,Automotive,False
+,Chrysler,,Global,Tier3,Automotive,False
+,Citroen,,Global,Tier3,Automotive,False
+,Continental AG,CTTAY,DE,Tier1,Automotive,True
+,Continental Automotive,,DE,Tier1,Automotive,False
+,Dacia,,Global,Tier3,Automotive,False
+,Daihatsu Motor,,JP,OEM,Automotive,False
+,Dana Incorporated,DAN,US,Tier1,Automotive,True
+,Denso Corp,DNZOY,JP,Tier1,Automotive,True
+,Denso Manufacturing,,US,Tier1,Automotive,False
+,Dodge,,Global,Tier3,Automotive,False
+,Dongfeng Motor Group,,Global,Tier3,Automotive,False
+,Ducati,,Global,Tier3,Automotive,False
+,Envision AESC,,CN,Tier2,Automotive,False
+,EVE Energy,300014.SZ,CN,Tier2,Automotive,True
+,Exor NV,,Global,Tier3,Automotive,False
+,Faurecia / Forvia,FURCF,FR,Tier1,Automotive,True
+,Ferrari NV,RACE,IT,OEM,Automotive,True
+,Fiat,,Global,Tier3,Automotive,False
+,Flex Automotive,,SG,Tier2,Automotive,False
+,Flex Ltd,FLEX,SG,Tier2,Automotive,True
+,Ford Motor,F,US,OEM,Automotive,True
+,Ford Motor Credit,,US,OEM,Automotive,False
+,French State,,Global,Tier3,Automotive,False
+,Geely Auto,GELYF,CN,OEM,Automotive,True
+,General Motors,GM,US,OEM,Automotive,True
+,Genesis Motors,,Global,Tier3,Automotive,False
+,Gentex Corporation,GNTX,US,Tier1,Automotive,True
+,Gestamp,GEST.MC,ES,Tier1,Automotive,True
+,GM Financial,,US,OEM,Automotive,False
+,GM Financial's,,US,OEM,Automotive,False
+,GMC,,Global,Tier3,Automotive,False
+,Goodyear Tire,GT,US,Tier1,Automotive,True
+,Guoxuan High-Tech,002074.SZ,CN,Tier2,Automotive,True
+,Harman International,,US,Tier1,Automotive,False
+,Hella,HLE.DE,DE,Tier1,Automotive,True
+,Hino Motors,HINOY,JP,OEM,Automotive,True
+,Hitachi Astemo,,JP,Tier1,Automotive,False
+,HL Mando,204320.KS,KR,Tier1,Automotive,True
+,Honda Financial Services,,JP,OEM,Automotive,False
+,Honda Motor,HMC,JP,OEM,Automotive,True
+,Hyundai Mobis,HYUMY,KR,Tier1,Automotive,True
+,Hyundai Motor,HYMTF,KR,OEM,Automotive,True
+,Hyundai WIA,011210.KS,KR,Tier1,Automotive,True
+,Infineon Technologies,IFX.DE,DE,Tier2,Automotive,True
+,Infiniti,,Global,Tier3,Automotive,False
+,Ioniq,,Global,Tier3,Automotive,False
+,Isuzu Motors,7202.T,JP,OEM,Automotive,True
+,Jaguar Land Rover,,Global,Tier3,Automotive,False
+,Jeep,,Global,Tier3,Automotive,False
+,JTEKT,6473.T,JP,Tier1,Automotive,True
+,Kia Corp,KIMTF,KR,OEM,Automotive,True
+,Koito Manufacturing,7276.T,JP,Tier1,Automotive,True
+,Lamborghini,,Global,Tier3,Automotive,False
+,Leapmotor,,Global,Tier2,Automotive,False
+,Lear Corporation,LEA,US,Tier1,Automotive,True
+,Lear Seating,,US,Tier1,Automotive,False
+,LG Energy Solution,373220.KS,KR,Tier2,Automotive,True
+,Li Auto,LI,CN,OEM,Automotive,True
+,Linamar Corp,LNR.TO,CA,Tier1,Automotive,True
+,Lincoln,,Global,Tier3,Automotive,False
+,Lithium Americas,,Global,Tier2,Automotive,False
+,Lucid Group,LCID,US,OEM,Automotive,True
+,Lucid Motors,,US,OEM,Automotive,False
+,Magna International,,Global,Tier2,Automotive,False
+,Magna Steyr,,AT,Tier1,Automotive,False
+,Mahindra & Mahindra,M&M.NS,IN,OEM,Automotive,True
+,Mahle GmbH,,DE,Tier1,Automotive,False
+,MAN SE,,Global,Tier3,Automotive,False
+,Marelli,,JP,Tier1,Automotive,False
+,Martinrea International,MRE.TO,CA,Tier1,Automotive,True
+,Maserati,,IT,OEM,Automotive,False
+,Mazda Motor,7261.T,JP,OEM,Automotive,True
+,Melexis,MELE.BR,BE,Tier2,Automotive,True
+,Mercedes-AMG,,Global,Tier3,Automotive,False
+,Mercedes-Benz,MBGAF,DE,OEM,Automotive,True
+,Mercedes-Maybach,,Global,Tier3,Automotive,False
+,MG Motor,,Global,Tier3,Automotive,False
+,Michelin,ML.PA,FR,Tier1,Automotive,True
+,Mini,,Global,Tier3,Automotive,False
+,Mitsubishi Motors,7211.T,JP,OEM,Automotive,True
+,Mobileye,MBLY,IL,Tier2,Automotive,True
+,Motherson Group,MOTHERSON.NS,IN,Tier1,Automotive,True
+,Murata Manufacturing,6981.T,JP,Tier2,Automotive,True
+,Nemak,NEMAKA.MX,MX,Tier1,Automotive,True
+,NIO Inc,NIO,CN,OEM,Automotive,True
+,Nippon Steel,5401.T,JP,Tier3,Automotive,True
+,Nissan Motor,NSANY,JP,OEM,Automotive,True
+,Novelis,,US,Tier3,Automotive,False
+,NSK Ltd,6471.T,JP,Tier1,Automotive,True
+,Nucor Steel,NUE,US,Tier2,Automotive,True
+,Nucor Tubular Products,,US,Tier2,Automotive,False
+,Nvidia Corp,NVDA,US,Tier2,Automotive,True
+,NXP Semiconductors,NXPI,NL,Tier2,Automotive,True
+,NXP USA Inc,,US,Tier2,Automotive,False
+,Onsemi,ON,US,Tier2,Automotive,True
+,Opel,,Global,Tier3,Automotive,False
+,Panasonic Energy,,JP,Tier2,Automotive,False
+,Panasonic Holdings,PCRFY,JP,Tier2,Automotive,True
+,Peugeot,,Global,Tier3,Automotive,False
+,Pininfarina,,Global,Tier3,Automotive,False
+,Polestar,PSNY,SE,OEM,Automotive,True
+,Porsche AG,DRPRY,DE,OEM,Automotive,True
+,Porsche Automobil Holding SE,,Global,Tier3,Automotive,False
+,Qualcomm,QCOM,US,Tier2,Automotive,True
+,Ram Trucks,,Global,Tier3,Automotive,False
+,Renault Group,RNLSY,FR,OEM,Automotive,True
+,Renesas Electronics,6723.T,JP,Tier2,Automotive,True
+,Rivian Automotive,RIVN,US,OEM,Automotive,True
+,Robert Bosch,,DE,Tier1,Automotive,False
+,Rohm Semiconductor,6963.T,JP,Tier2,Automotive,True
+,Rolls-Royce Motor Cars,,Global,Tier3,Automotive,False
+,SAIC Motor,600104.SS,CN,OEM,Automotive,True
+,Samsung Electronics,005930.KS,KR,Tier2,Automotive,True
+,Scania,,Global,Tier3,Automotive,False
+,Schaeffler AG,SHA.DE,DE,Tier1,Automotive,True
+,Sensata Technologies,ST,US,Tier2,Automotive,True
+,SK On,,KR,Tier2,Automotive,False
+,Skoda Auto,,Global,Tier3,Automotive,False
+,Smart,,Global,Tier3,Automotive,False
+,Solid Power,,Global,Tier2,Automotive,False
+,Sony,,Global,Tier2,Automotive,False
+,SQM,SQM,CL,Tier3,Automotive,True
+,Steel Technologies,,US,Tier3,Automotive,False
+,Stellantis,STLA,NL,OEM,Automotive,True
+,STMicroelectronics,STM,CH,Tier2,Automotive,True
+,Subaru Corp,7270.T,JP,OEM,Automotive,True
+,Sumitomo Electric,5802.T,JP,Tier1,Automotive,True
+,Suzuki Motor,7269.T,JP,OEM,Automotive,True
+,Tata Motors,TATAMOTORS.NS,IN,OEM,Automotive,True
+,TE Connectivity,TEL,CH,Tier1,Automotive,True
+,Tenaciou3 Prospect Investment Limited,,Global,Tier3,Automotive,False
+,Tencent,,Global,Tier3,Automotive,False
+,Tenneco,,US,Tier1,Automotive,False
+,Tesla,TSLA,US,OEM,Automotive,True
+,Texas Instruments,TXN,US,Tier2,Automotive,True
+,Toyota Motor,TM,JP,OEM,Automotive,True
+,TSMC,TSM,TW,Tier2,Automotive,True
+,TSMC Arizona,,US,Tier2,Automotive,False
+,Umicore,UMI.BR,BE,Tier3,Automotive,True
+,Valeo,VLEEY,FR,Tier1,Automotive,True
+,Vauxhall,,Global,Tier3,Automotive,False
+,VinFast,VFS,VN,OEM,Automotive,True
+,Visteon Corporation,VC,US,Tier1,Automotive,True
+,Volkswagen Group,VWAGY,DE,OEM,AMG Moutomotive,True
+,Volvo Cars,VLVLY,SE,OEM,Automotive,True
+,Xpeng Inc,XPEV,CN,OEM,Automotive,True
+,Yazaki,,JP,Tier1,Automotive,False
+,ZF Active Safety,,DE,Tier1,Automotive,False
+,ZF Friedrichshafen,,DE,Tier1,Automotive,False

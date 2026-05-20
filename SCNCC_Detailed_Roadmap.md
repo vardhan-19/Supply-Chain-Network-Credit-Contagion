@@ -143,7 +143,7 @@ The graph `G = (V, E, X, W)` is a **heterogeneous, directed, weighted, multi-rel
 **Edge type semantics and directionality:**
 
 | Edge Type | Direction | Risk Propagation | Example |
-|-----------|-----------|-------------------|---------|
+|-----------|---------e--|-------------------|---------|
 | `supply` | Supplier → Customer | Upstream failure → downstream disruption | Denso → Toyota |
 | `trade_credit` | Creditor → Debtor | Default → accounts receivable write-off | Bosch → BMW (net-60 terms) |
 | `ownership` | Parent → Subsidiary | Contagion via equity exposure | Toyota → Denso (24.7% stake) |
@@ -215,15 +215,17 @@ def extract_suppliers_from_filing(text):
     return list(set(suppliers))  # deduplicate
 ```
 
-**Resulting CSV format — `supply_chain.csv`:**
+**Resulting CSV format — `supply_chain_combined.csv`:**
 
 ```csv
-supplier,company,relationship_type,data_source
-SteelCorp,Toyota,tier1_supplier,sec_10k
-ElectroParts,Toyota,tier1_supplier,sec_10k
-SteelCorp,Ford,tier1_supplier,sec_10k
-TSMC,Apple,tier1_supplier,sec_10k
+source,target,relationship_type,data_source,confidence,year,payment_terms,credit_amount_usd,ownership_pct,equity_value_usd,notes
+Denso Corp,Toyota Motor,supply,sec_10k_TM_2025,1.0,2025,,,,,manual_stub
+Robert Bosch,Toyota Motor,supply,sec_10k_TM_2025,1.0,2025,,,,,manual_stub
+SteelCorp,Ford Motor,supply,sec_10k_F_2025,0.8,2025,,,,,nlp_extracted
+TSMC,Apple Inc,supply,sec_10k_AAPL_2025,1.0,2025,,,,,manual_verified
 ```
+
+> **Note:** The `source` column is the supplier and `target` is the customer. Additional columns (`payment_terms`, `credit_amount_usd`, `ownership_pct`, `equity_value_usd`) support `trade_credit` and `ownership` edge types and may be empty for basic `supply` edges.
 
 **Source 2 — Alternative / Supplementary Datasets:**
 - [Kaggle Supply Chain datasets](https://www.kaggle.com/) — search "supply chain network"
@@ -273,26 +275,41 @@ financial_data = pd.DataFrame([get_financial_features(t) for t in tickers])
 - Healthy companies → `default_label = 0`
 - For companies without clear default history, use **credit rating downgrades** (BBB- or below) as a proxy
 
-**Final financial dataset — `company_financials.csv`:**
+**Final financial dataset — `company_financials_validated.csv`:**
 
 ```csv
-company,ticker,revenue,debt,market_cap,current_ratio,debt_to_equity,profit_margin,revenue_growth,default_label
-Toyota,TM,280000000000,200000000000,250000000000,1.1,1.2,0.07,0.05,0
-SteelCorp,STLC,4000000000,2000000000,3000000000,0.9,2.1,0.03,-0.02,0
-ElectroParts,ELCP,1000000000,500000000,800000000,0.6,3.5,0.01,-0.10,1
+company_name,ticker,revenue,total_debt,market_cap,current_ratio,debt_to_equity,profit_margin,revenue_growth,interest_coverage,roa,data_confidence,year,source,parent_company,is_subsidiary,imputation_method
+Autoliv,ALV,10814999552.0,2190000000.0,7927744000.0,1.045,89.775,0.097,0.038,,0.084,high,2025,"Autoliv FY2025 Earnings",,False,none
+Robert Bosch,,91000000000.0,,,,,0.02,0.008,,,medium,2025,"Robert Bosch GmbH FY2025",,False,none
+Polestar,PSNY,2030000000.0,5120000000.0,1490000000.0,0.426,,-1.07,-0.14,,-0.28,high,2025,"Polestar FY2024 Annual Report",,False,none
+Magna Steyr,,,,,,,,,,,,imputed,2025,"Magna Steyr contract div.",Magna International,True,parent_financials
 ```
+
+> **Note:** The `parent_company`, `is_subsidiary`, and `imputation_method` columns track subsidiary relationships — scripts like `data/impute_subsidiaries.py` and `data/append_group_b.py` were used to populate financial data for subsidiaries and private companies by imputing from their parent's row.
 
 #### Task 2C: Entity Resolution (Critical Step)
 
-> **Why this step matters:** You now have supplier names from SEC filings (Task 2A) and financial data from yfinance (Task 2B), but the same company may appear as "Toyota Motor Corp" in one source and "TOYOTA" in another. Before constructing the graph in Phase 3, all names must resolve to a single canonical entity. This step creates the **master entity index** — without it, the graph will contain duplicate nodes and broken edges.
+> **Why this step matters:** You now have supplier names from SEC filings (Task 2A) stored in `data/raw/supply_chain_combined.csv` (columns: `source`, `target`) and financial data in `data/raw/company_financials_validated.csv` (column: `company_name`), but the same company may appear as "Toyota Motor Corp" in one source and "TOYOTA" in another. Before constructing the graph in Phase 3, all names must resolve to a single canonical entity. This step creates the **master entity index** — without it, the graph will contain duplicate nodes and broken edges.
 
 **Problem:** The same company appears differently across data sources (e.g., "Toyota Motor Corp", "Toyota Motor Corporation", "TOYOTA").
+
+**Input files:**
+- `data/raw/supply_chain_combined.csv` — collect all unique names from `source` and `target` columns
+- `data/raw/company_financials_validated.csv` — collect all unique `company_name` values
+
+**Output files:**
+- `data/processed/entity_index.json` — master mapping of raw name → canonical UUID
+- `data/processed/supply_chain_resolved.csv` — edge list with `source_id` and `target_id` UUID columns added
+- `data/processed/company_financials_resolved.csv` — financials with `entity_id` UUID column added
+
+**Implementation script:** `graph/entity_resolution.py`
 
 **Solution — Multi-strategy entity resolution:**
 
 ```python
 # --- Entity Resolution Pipeline ---
 # Combines three strategies to build a master entity index with UUIDs
+# Script location: graph/entity_resolution.py
 
 import uuid
 from fuzzywuzzy import fuzz  # fuzzy string matching library
@@ -301,8 +318,8 @@ def resolve_entities(names_list):
     """
     Match company names across datasets using:
     1. Deterministic exact match (after normalization)
-    2. Probabilistic string distance (fuzzy matching)
-    3. Graph-based similarity (shared neighbors = likely same entity)
+    2. Probabilistic string distance (fuzzy matching via token_sort_ratio)
+    3. Ticker alignment (same ticker = same entity)
     Returns a dict mapping raw names → canonical UUID
     """
     master_index = {}
@@ -313,8 +330,8 @@ def resolve_entities(names_list):
         matched = False
 
         for canonical in canonical_names:
-            # Fuzzy match: ratio > 85 means very likely the same entity
-            if fuzz.ratio(normalized, canonical) > 85:
+            # Fuzzy match: token_sort_ratio > 85 means very likely the same entity
+            if fuzz.token_sort_ratio(normalized, canonical) > 85:
                 master_index[name] = master_index[canonical]
                 matched = True
                 break
@@ -329,26 +346,34 @@ def resolve_entities(names_list):
     return master_index
 ```
 
+> ⚠️ **Subsidiary handling:** Companies where `is_subsidiary = True` in `company_financials_validated.csv` must receive their OWN UUID distinct from their `parent_company`. They are separate graph nodes (e.g., "Magna Steyr" ≠ "Magna International" even though Steyr is a division of Magna).
+
 ### Infrastructure & API Tasks
 
 > **Parallel track:** While data collection and entity resolution are underway above, the following infrastructure tasks can proceed in parallel. The database schema and FastAPI skeleton built here will be **consumed by Phase 3** when the graph data needs to be served to the frontend, and by **Phase 4** when the model predictions need an API endpoint.
+
+**Existing project files for this track:**
+- `api/main.py` — FastAPI skeleton (already created ✅)
+- `api/load_data.py` — CSV-to-SQLite loader (template exists, needs updating for resolved CSVs)
+- `api/view_db.py` — Quick database viewer for verification
+- `data/scncc.db` — SQLite database file (schema created ✅, needs populating with resolved data)
 
 - [ ] Set up **SQLite database** schema to store companies and relationships
 - [ ] Write a Python script that reads CSVs and loads them into the database
 - [ ] Install and test **FastAPI** with a simple "Hello World" endpoint:
 
 ```python
-# --- Minimal FastAPI setup ---
+# --- FastAPI setup (already exists at api/main.py) ---
 from fastapi import FastAPI
 
-app = FastAPI(title="Supply Chain Contagion API")
+app = FastAPI(title="Supply Chain Network Credit Contagion API")
 
 @app.get("/")
-def root():
+def read_root():
     """Health check endpoint."""
-    return {"status": "running", "message": "Supply Chain Contagion API"}
+    return {"status": "running", "message": "Supply Chain Contagion API", "version": "0.1.0"}
 
-# Run with: uvicorn api.main:app --reload
+# Run with: uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 - [ ] Create database schema:
@@ -356,37 +381,49 @@ def root():
 ```sql
 -- companies table: stores node data
 CREATE TABLE companies (
-    id TEXT PRIMARY KEY,        -- UUID from entity resolution
-    name TEXT NOT NULL,
+    id TEXT PRIMARY KEY,        -- UUID from entity resolution (entity_id)
+    name TEXT NOT NULL,         -- Canonical company name (company_name)
     ticker TEXT,
     revenue REAL,
-    debt REAL,
+    total_debt REAL,
     market_cap REAL,
     current_ratio REAL,
     debt_to_equity REAL,
     profit_margin REAL,
     revenue_growth REAL,
-    default_label INTEGER DEFAULT 0
+    interest_coverage REAL,
+    roa REAL,
+    altman_z_score REAL,
+    default_label INTEGER DEFAULT 0,
+    data_confidence TEXT,
+    parent_company TEXT,
+    is_subsidiary INTEGER DEFAULT 0
 );
 
 -- relationships table: stores edge data
 CREATE TABLE relationships (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    supplier_id TEXT,           -- FK to companies.id
-    company_id TEXT,            -- FK to companies.id
-    relationship_type TEXT,     -- 'tier1_supplier', 'trade_credit', 'ownership'
+    supplier_id TEXT,           -- FK to companies.id (maps to source_id from resolved CSV)
+    customer_id TEXT,           -- FK to companies.id (maps to target_id from resolved CSV)
+    relationship_type TEXT,     -- 'supply', 'trade_credit', 'ownership'
     weight REAL DEFAULT 1.0,    -- edge weight (transaction intensity)
+    confidence REAL DEFAULT 1.0,
     data_source TEXT,
+    year INTEGER,
     FOREIGN KEY (supplier_id) REFERENCES companies(id),
-    FOREIGN KEY (company_id) REFERENCES companies(id)
+    FOREIGN KEY (customer_id) REFERENCES companies(id)
 );
 ```
+
+> **Column mapping (CSV → SQLite):**
+> - `company_financials_resolved.csv` → `companies` table: `entity_id` → `id`, `company_name` → `name`
+> - `supply_chain_resolved.csv` → `relationships` table: `source_id` → `supplier_id`, `target_id` → `customer_id`
 
 ---
 
 ## Phase 3 — Graph Construction & Feature Engineering (Week 3–4)
 
-> **Where you are in the pipeline:** Phase 2 produced three key artifacts: (1) `supply_chain.csv` — an edgelist of who-supplies-whom, (2) `company_financials.csv` — financial metrics for each company, and (3) a master entity index mapping all name variations to canonical UUIDs. These CSVs are flat tabular data — they don't encode the rich network structure we need for contagion modeling. This phase **transforms** those flat tables into a live graph `G = (V, E, X, W)` and computes the node/edge features that will feed into the GNN in Phase 4.
+> **Where you are in the pipeline:** Phase 2 produced three key artifacts: (1) `data/processed/supply_chain_resolved.csv` — an edgelist of who-supplies-whom with UUID-based `source_id`/`target_id` columns, (2) `data/processed/company_financials_resolved.csv` — financial metrics for each company with a UUID-based `entity_id` column, and (3) `data/processed/entity_index.json` — the master entity index mapping all name variations to canonical UUIDs. These CSVs are flat tabular data — they don't encode the rich network structure we need for contagion modeling. This phase **transforms** those flat tables into a live graph `G = (V, E, X, W)` and computes the node/edge features that will feed into the GNN in Phase 4.
 
 **Goal:** Turn CSV data into a real network graph `G = (V, E, X, W)` and compute features.
 
@@ -406,20 +443,24 @@ CREATE TABLE relationships (
 
 ```python
 # --- Build the supply chain graph ---
+# Script location: graph/build_graph.py
 import networkx as nx
 import pandas as pd
 
-df = pd.read_csv('data/processed/supply_chain.csv')
+# Read the entity-resolved edge list produced in Phase 2
+df = pd.read_csv('data/processed/supply_chain_resolved.csv')
 
-# Create a directed graph: edge from supplier → company (A supplies B)
+# Create a directed graph: edge from source (supplier) → target (customer)
 G = nx.DiGraph()
 
 for _, row in df.iterrows():
     G.add_edge(
-        row['supplier'],
-        row['company'],
+        row['source_id'],          # supplier UUID
+        row['target_id'],          # customer UUID
         relationship_type=row.get('relationship_type', 'supply'),
-        weight=row.get('weight', 1.0)  # edge weight = transaction intensity
+        weight=row.get('confidence', 1.0),  # edge weight = confidence initially
+        data_source=row.get('data_source', ''),
+        year=row.get('year', '')
     )
 
 print(f"Nodes: {G.number_of_nodes()}, Edges: {G.number_of_edges()}")
