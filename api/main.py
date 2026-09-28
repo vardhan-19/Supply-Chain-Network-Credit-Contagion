@@ -32,8 +32,16 @@ def load_globals():
         return
 
     nodes_path = os.path.join(base_dir, 'data', 'processed', 'node_features_X.csv')
+    if not os.path.exists(nodes_path):
+        nodes_path = os.path.join(base_dir, 'static_offline_folder', 'data', 'processed', 'node_features_X.csv')
+
     edges_path = os.path.join(base_dir, 'data', 'processed', 'edge_features_W.csv')
+    if not os.path.exists(edges_path):
+        edges_path = os.path.join(base_dir, 'static_offline_folder', 'data', 'processed', 'edge_features_W.csv')
+
     weights_path = os.path.join(base_dir, 'model', 'weights', 'best_gnn.pt')
+    if not os.path.exists(weights_path):
+        weights_path = os.path.join(base_dir, 'static_offline_folder', 'model', 'weights', 'best_gnn.pt')
     
     if not os.path.exists(weights_path) or not os.path.exists(nodes_path) or not os.path.exists(edges_path):
         raise FileNotFoundError("Missing data or model weights. Please run training first.")

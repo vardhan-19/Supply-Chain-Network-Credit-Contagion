@@ -33,6 +33,12 @@ node_modules/
 .env
 
 # ==========================================
+# Offline / Non-Repo Storage
+# ==========================================
+static_offline_folder/
+static_offiline_folder/
+
+# ==========================================
 # Agent & Development Scratch (Private)
 # ==========================================
 .agents/
