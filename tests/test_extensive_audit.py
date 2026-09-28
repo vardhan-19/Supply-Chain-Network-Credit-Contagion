@@ -8,21 +8,53 @@ import pandas as pd
 
 API_BASE = "http://127.0.0.1:8001"
 
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if base_dir not in sys.path:
+    sys.path.insert(0, base_dir)
+
+class AuditClient:
+    def __init__(self):
+        self._test_client = None
+        self.use_live = False
+        try:
+            r = requests.get(f"{API_BASE}/health", timeout=1)
+            if r.status_code == 200:
+                self.use_live = True
+        except Exception:
+            self.use_live = False
+
+        if not self.use_live:
+            from fastapi.testclient import TestClient
+            from api.main import app
+            self._test_client = TestClient(app)
+
+    def get(self, url, **kwargs):
+        if self.use_live:
+            return requests.get(url, **kwargs)
+        return self._test_client.get(url, **kwargs)
+
+    def post(self, url, **kwargs):
+        if self.use_live:
+            return requests.post(url, **kwargs)
+        return self._test_client.post(url, **kwargs)
+
+client = AuditClient()
+
 def run_extensive_audit():
     print("=" * 80)
     print("SCNCC EXTENSIVE MULTI-FEATURE AUDIT & EMPIRICAL INTEGRITY TEST SUITE")
-    print("Target: Backend API + GNN Model + SCR-NR / SCR-ER Contagion Engines")
+    print(f"Target: {'Live API on port 8001' if client.use_live else 'In-Process FastAPI TestClient'}")
     print("=" * 80)
 
     # ---------------------------------------------------------
     # 1. API Health & Connectivity Check
     # ---------------------------------------------------------
     print("\n[Phase 1/5] Checking API Liveness and Root Endpoints...")
-    r_health = requests.get(f"{API_BASE}/health", timeout=5)
+    r_health = client.get(f"{API_BASE}/health", timeout=5)
     assert r_health.status_code == 200, f"Health check failed: {r_health.status_code}"
     print(f"  PASS: /health returned {r_health.status_code} {r_health.json()}")
 
-    r_root = requests.get(f"{API_BASE}/", timeout=5)
+    r_root = client.get(f"{API_BASE}/", timeout=5)
     assert r_root.status_code == 200, f"Root check failed: {r_root.status_code}"
     print(f"  PASS: / returned {r_root.status_code} {r_root.json()}")
 
@@ -30,7 +62,7 @@ def run_extensive_audit():
     # 2. Graph Retrieval & Feature Inspection
     # ---------------------------------------------------------
     print("\n[Phase 2/5] Retrieving Full Graph Network Topology (/graph)...")
-    r_graph = requests.get(f"{API_BASE}/graph", timeout=15)
+    r_graph = client.get(f"{API_BASE}/graph", timeout=15)
     assert r_graph.status_code == 200, f"Graph retrieval failed: {r_graph.status_code}"
     graph_data = r_graph.json()
     assert "nodes" in graph_data and "links" in graph_data, "Malformed graph response"
@@ -44,7 +76,7 @@ def run_extensive_audit():
     # 3. Model Predictions (/predict)
     # ---------------------------------------------------------
     print("\n[Phase 3/5] Testing Baseline Predictions (/predict)...")
-    r_pred = requests.post(f"{API_BASE}/predict", timeout=15)
+    r_pred = client.post(f"{API_BASE}/predict", timeout=15)
     assert r_pred.status_code == 200, f"Prediction endpoint failed: {r_pred.status_code}"
     pred_data = r_pred.json()
     assert isinstance(pred_data, list), "Predict should return a list"
@@ -86,7 +118,7 @@ def run_extensive_audit():
         cid = c["id"]
         cname = c["name"]
         payload = {"target_company_id": cid, "shock_type": "node_removal"}
-        r_sim = requests.post(f"{API_BASE}/simulate", json=payload, timeout=15)
+        r_sim = client.post(f"{API_BASE}/simulate", json=payload, timeout=15)
         assert r_sim.status_code == 200, f"Simulation failed for {cname}: {r_sim.text}"
         res = r_sim.json()
         assert "total_systemic_loss_increase" in res, f"Missing loss field: {res}"
@@ -139,7 +171,7 @@ def run_extensive_audit():
             "source_company_id": src_id,
             "shock_type": "edge_removal"
         }
-        r_edge_sim = requests.post(f"{API_BASE}/simulate", json=payload, timeout=15)
+        r_edge_sim = client.post(f"{API_BASE}/simulate", json=payload, timeout=15)
         assert r_edge_sim.status_code == 200, f"Edge simulation failed: {r_edge_sim.text}"
         res = r_edge_sim.json()
         assert "total_systemic_loss_increase" in res, f"Missing loss field: {res}"
@@ -174,25 +206,25 @@ def run_extensive_audit():
     print("\n[Phase 5/5] Security, Malformed Inputs & Boundary Validation...")
     
     # Test 5.1: Non-existent target company UUID
-    r_bad_id = requests.post(f"{API_BASE}/simulate", json={"target_company_id": "non-existent-uuid-9999", "shock_type": "node_removal"})
+    r_bad_id = client.post(f"{API_BASE}/simulate", json={"target_company_id": "non-existent-uuid-9999", "shock_type": "node_removal"})
     print(f"  Test 5.1: Non-existent target UUID -> HTTP {r_bad_id.status_code}")
     assert r_bad_id.status_code in (400, 404) or (r_bad_id.status_code == 200 and "error" in r_bad_id.json())
     print("    Handled safely without crash.")
 
     # Test 5.2: Invalid shock type
-    r_bad_type = requests.post(f"{API_BASE}/simulate", json={"target_company_id": selected_sample[0]["id"], "shock_type": "nuclear_meltdown"})
+    r_bad_type = client.post(f"{API_BASE}/simulate", json={"target_company_id": selected_sample[0]["id"], "shock_type": "nuclear_meltdown"})
     print(f"  Test 5.2: Invalid shock type -> HTTP {r_bad_type.status_code}")
     assert r_bad_type.status_code in (400, 422) or (r_bad_type.status_code == 200 and "error" in r_bad_type.json())
     print("    Handled safely without crash.")
 
     # Test 5.3: Edge removal missing source company
-    r_missing_src = requests.post(f"{API_BASE}/simulate", json={"target_company_id": selected_sample[0]["id"], "shock_type": "edge_removal"})
+    r_missing_src = client.post(f"{API_BASE}/simulate", json={"target_company_id": selected_sample[0]["id"], "shock_type": "edge_removal"})
     print(f"  Test 5.3: Edge removal missing source -> HTTP {r_missing_src.status_code}")
     assert r_missing_src.status_code in (400, 422) or (r_missing_src.status_code == 200 and "error" in r_missing_src.json())
     print("    Handled safely without crash.")
 
     # Test 5.4: Malformed empty JSON
-    r_empty = requests.post(f"{API_BASE}/simulate", json={})
+    r_empty = client.post(f"{API_BASE}/simulate", json={})
     print(f"  Test 5.4: Empty JSON body -> HTTP {r_empty.status_code}")
     assert r_empty.status_code == 422, "FastAPI should reject empty body with 422 Unprocessable Entity"
     print("    Handled safely by Pydantic validation.")
