@@ -1,6 +1,6 @@
 # Supply Chain Network Credit Contagion (SCNCC)
 
-[![🔴 Live Demo](https://img.shields.io/badge/🔴_Live_Demo-Access_Dashboard-crimson?style=for-the-badge&logo=google-chrome&logoColor=white)](http://localhost:5173/)
+[![🔴 Live Demo](https://img.shields.io/badge/🔴_Live_Demo-Launch_Online_Dashboard-crimson?style=for-the-badge&logo=google-chrome&logoColor=white)](https://vardhan-19.github.io/Supply-Chain-Network-Credit-Contagion/)
 [![📖 Technical Summary](https://img.shields.io/badge/📖_Technical_Monograph-SUMMARY.md-2ea44f?style=for-the-badge)](SUMMARY.md)
 [![📄 Master Report PDF](https://img.shields.io/badge/📄_Academic_Report-PDF_(606KB)-purple?style=for-the-badge)](docs/SCNCC_Project_Report.pdf)
 
@@ -14,6 +14,7 @@
 
 > **Quantitative Credit Risk Management & Systemic Contagion Stress Testing for the Global Automotive Manufacturing Network using Graph Neural Networks (GNNs).**
 >
+> 🔴 **Instant Online Live Demo:** **[https://vardhan-19.github.io/Supply-Chain-Network-Credit-Contagion/](https://vardhan-19.github.io/Supply-Chain-Network-Credit-Contagion/)** *(Interactive WebGL cockpit, zero setup required).*  
 > 📖 **Comprehensive Mathematical Monograph & Empirical Proofs:** See [`SUMMARY.md`](SUMMARY.md) for full derivations, Bayes classifier leakage proofs, Basel F-IRB formulations, and peer-reviewed citations.  
 > 📄 **Academic Research Monograph:** See [`docs/SCNCC_Project_Report.pdf`](docs/SCNCC_Project_Report.pdf) (606KB publication-grade PDF).
 
@@ -108,14 +109,27 @@ To eliminate data leakage while retaining full predictive fidelity, `altman_z_sc
 
 ---
 
-## 5. Quickstart Guide (5 Minutes)
+## 5. Live Demo & Quickstart Guide
 
-### Prerequisites
+### 🌐 Instant Online Live Demo (Zero Setup)
+Anyone viewing this repository on any computer or mobile browser can immediately launch and interact with the full risk intelligence cockpit:
+
+👉 **[https://vardhan-19.github.io/Supply-Chain-Network-Credit-Contagion/](https://vardhan-19.github.io/Supply-Chain-Network-Credit-Contagion/)**
+
+- **WebGL Network Exploration:** Inspect all 174 global automotive corporations and 1,213 directed trade dependencies in real-time.
+- **Interactive Contagion Stress Testing:** Run SCR-NR (corporate liquidation) and SCR-ER (contract severance) systemic shock simulations with instantaneous cascading loss metrics.
+- **Client-Side GNN Cache:** Runs seamlessly across any device without requiring Python, PyTorch, or local installation.
+
+---
+
+### 💻 Local Development Setup (Optional)
+
+#### Prerequisites
 - Python 3.10+
 - Node.js 18+ and npm
 - Git
 
-### Installation
+#### Installation
 
 #### Option A: Using Conda (Recommended)
 ```bash

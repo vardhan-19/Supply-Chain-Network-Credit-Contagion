@@ -1,9 +1,14 @@
 # Supply Chain Network Credit Contagion (SCNCC)
 ## Mathematical Foundations, Graph Neural Network Architecture, and Contagion Stress Testing
 
+[![🔴 Live Demo](https://img.shields.io/badge/🔴_Live_Demo-Launch_Online_Dashboard-crimson?style=for-the-badge&logo=google-chrome&logoColor=white)](https://vardhan-19.github.io/Supply-Chain-Network-Credit-Contagion/)
+[![README](https://img.shields.io/badge/README-Project_Overview-blue?style=for-the-badge)](README.md)
+[![Academic PDF](https://img.shields.io/badge/Academic_Report-PDF_(606KB)-purple?style=for-the-badge)](docs/SCNCC_Project_Report.pdf)
+
 > **Author:** Harshvardhan Upadhyaya  
 > **Topic:** Quantitative Credit Risk, Graph Machine Learning, Contagion Simulation, and Regulatory Basel Expected Loss  
 > **Target Domain:** Global Automotive Manufacturing & Multi-Tier Supply Chain Ecosystem  
+> **Interactive Online Demo:** [https://vardhan-19.github.io/Supply-Chain-Network-Credit-Contagion/](https://vardhan-19.github.io/Supply-Chain-Network-Credit-Contagion/)  
 > **Master Reference:** [`docs/SCNCC_Research_Report.tex`](file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/docs/SCNCC_Research_Report.tex) / [`docs/SCNCC_Project_Report.pdf`](file:///d:/Supply%20Chain%20Network%20Credit%20Contagion/docs/SCNCC_Project_Report.pdf)
 
 ---

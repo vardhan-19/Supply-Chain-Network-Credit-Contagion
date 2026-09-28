@@ -11,6 +11,7 @@ import react from '@vitejs/plugin-react'
  *  - /health added to proxy map for startup polling.
  */
 export default defineConfig({
+  base: './',
   plugins: [react()],
   server: {
     // Use a fixed port so the URL is always the same
