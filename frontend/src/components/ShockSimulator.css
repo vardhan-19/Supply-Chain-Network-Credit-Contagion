@@ -1,0 +1,463 @@
+/* ═══════════════════════════════════════════════════
+   ShockSimulator.css — Right sidebar shock panel
+   Premium white theme — professional data entry style
+   ═══════════════════════════════════════════════════ */
+
+/* ── Section container ── */
+.sim-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sim-section__label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+/* ── Searchable select ── */
+.sim-select-wrapper {
+  position: relative;
+}
+
+.sim-select__search {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 7px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.sim-select__search:focus {
+  border-color: #1a56db;
+  box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.08);
+}
+
+.sim-select__search::placeholder {
+  color: #9ca3af;
+}
+
+.sim-select__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 50;
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+}
+
+.sim-select__dropdown::-webkit-scrollbar { width: 4px; }
+.sim-select__dropdown::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.sim-select__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+  gap: 8px;
+}
+
+.sim-select__option:hover {
+  background: #f3f4f6;
+}
+
+.sim-select__option-name {
+  font-size: 12px;
+  color: #111827;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.sim-select__option-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.sim-select__option-pd {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  color: #6b7280;
+}
+
+/* Risk tier badges */
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
+}
+.risk-badge--high   { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.risk-badge--medium { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.risk-badge--low    { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+
+/* Selected company display */
+.sim-selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 7px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  gap: 8px;
+}
+
+.sim-selected__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e40af;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sim-selected__clear {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.sim-selected__clear:hover {
+  color: #dc2626;
+}
+
+/* ── Shock type radio ── */
+.sim-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sim-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.14s ease;
+  border: 1px solid transparent;
+}
+
+.sim-radio:hover {
+  background: #f9fafb;
+}
+
+.sim-radio--active {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.sim-radio--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sim-radio--disabled:hover {
+  background: transparent;
+}
+
+.sim-radio__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+}
+
+.sim-radio--active .sim-radio__dot {
+  border-color: #1a56db;
+}
+
+.sim-radio--active .sim-radio__dot::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1a56db;
+}
+
+.sim-radio__label {
+  font-size: 12px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.sim-radio__badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+  margin-left: 4px;
+}
+
+/* ── Simulate button ── */
+.sim-button-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sim-button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.22);
+  font-family: inherit;
+}
+
+.sim-button:hover:not(:disabled) {
+  background: #b91c1c;
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.32);
+  transform: translateY(-1px);
+}
+
+.sim-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.sim-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.sim-button__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: sim-spin 0.7s linear infinite;
+}
+
+@keyframes sim-spin { to { transform: rotate(360deg); } }
+
+/* ── Results ── */
+.sim-results {
+  padding: 14px 16px;
+  animation: sim-fadeIn 0.25s ease;
+}
+
+@keyframes sim-fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sim-results__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sim-results__title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #374151;
+}
+
+.sim-results__clear {
+  background: none;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.14s;
+  font-family: inherit;
+}
+
+.sim-results__clear:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+/* Big stat card */
+.sim-loss-card {
+  padding: 16px;
+  border-radius: 8px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.sim-loss-card__label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.sim-loss-card__value {
+  font-size: 26px;
+  font-weight: 800;
+  color: #dc2626;
+  font-family: 'DM Mono', monospace;
+  line-height: 1.2;
+}
+
+.sim-loss-card__company {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Affected companies list */
+.sim-affected-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+.sim-affected-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sim-affected-row {
+  display: grid;
+  grid-template-columns: 1fr 46px 46px 50px 46px;
+  gap: 4px;
+  padding: 7px 8px;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 11px;
+  align-items: center;
+  transition: background 0.12s;
+}
+
+.sim-affected-row:hover {
+  background: #f9fafb;
+}
+
+.sim-affected-row--header {
+  font-weight: 700;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9ca3af;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+  padding-bottom: 6px;
+  margin-bottom: 2px;
+}
+
+.sim-affected-row--header:hover { background: #f9fafb; }
+
+.sim-affected-row__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #111827;
+  font-weight: 500;
+}
+
+.sim-affected-row__value {
+  text-align: right;
+  font-family: 'DM Mono', monospace;
+  color: #6b7280;
+}
+
+.sim-affected-row__delta {
+  text-align: right;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+}
+
+.sim-affected-row__delta--high   { color: #dc2626; }
+.sim-affected-row__delta--medium { color: #d97706; }
+.sim-affected-row__delta--low    { color: #9ca3af; }
+
+/* ── No selection state ── */
+.sim-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+  text-align: center;
+  gap: 8px;
+}
+
+.sim-empty__icon {
+  font-size: 28px;
+  opacity: 0.35;
+}
+
+.sim-empty__text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #9ca3af;
+}

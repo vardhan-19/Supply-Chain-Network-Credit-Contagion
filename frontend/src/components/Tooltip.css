@@ -1,0 +1,105 @@
+/* ═══════════════════════════════════════════════════
+   Tooltip.css — Click-triggered definition popover
+   Auto-sizes to content. Always on top. Never clips.
+   ═══════════════════════════════════════════════════ */
+
+/* Wrapper — inline, dashed underline as click hint */
+.tt-wrap {
+  display: inline;
+  cursor: pointer;
+  border-bottom: 1.5px dashed rgba(26, 86, 219, 0.5);
+  transition: border-bottom-color 0.15s ease;
+}
+
+.tt-wrap:hover {
+  border-bottom-color: rgba(26, 86, 219, 0.9);
+}
+
+/* ── The popover card ── */
+.tt-box {
+  /* Highest z-index — must appear above everything */
+  position: fixed;
+  z-index: 2147483647;   /* max CSS z-index */
+
+  /* Auto-size: no max-width clipping; wraps naturally */
+  width: max-content;
+  max-width: min(320px, 90vw);
+  min-width: 140px;
+
+  /* Visuals */
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-left: 3px solid #1a56db;
+  border-radius: 7px;
+  padding: 9px 30px 9px 12px;  /* right pad for close button */
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.18),
+    0 2px 8px rgba(0, 0, 0, 0.10);
+
+  /* Typography */
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #1f2937;
+
+  /* Entry animation */
+  animation: tt-in 0.14s ease forwards;
+
+  /* Allow text selection */
+  user-select: text;
+  pointer-events: all;
+}
+
+@keyframes tt-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Bold term label at top */
+.tt-box__term {
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  color: #1a56db;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Definition text — block so it fills the card width */
+.tt-box__text {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #1f2937;
+  white-space: normal;   /* allow wrapping */
+  word-break: break-word;
+}
+
+/* Close × button */
+.tt-box__close {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  color: #9ca3af;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.12s, background 0.12s;
+}
+
+.tt-box__close:hover {
+  color: #374151;
+  background: #f3f4f6;
+}

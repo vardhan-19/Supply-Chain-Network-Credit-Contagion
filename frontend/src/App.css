@@ -1,0 +1,465 @@
+/* ═══════════════════════════════════════════════════════════
+   App.css — SCNCC Dashboard Layout v2
+   New architecture: single left panel + slide-in right panel
+   Graph always visible, adjusts width with flex
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── CSS Variables ── */
+:root {
+  --bg-deep:           #ffffff;
+  --bg-surface:        #ffffff;
+  --bg-subtle:         #f9fafb;
+  --bg-panel:          #ffffff;
+  --border-dim:        #e5e7eb;
+  --border-strong:     #d1d5db;
+  --border-active:     #1a56db;
+  --text-primary:      #111827;
+  --text-secondary:    #374151;
+  --text-muted:        #6b7280;
+  --text-dim:          #9ca3af;
+  --accent:            #1a56db;
+  --accent-bg:         rgba(26, 86, 219, 0.06);
+  --accent-hover:      rgba(26, 86, 219, 0.12);
+  --danger:            #dc2626;
+  --danger-bg:         #fef2f2;
+  --warning:           #d97706;
+  --success:           #059669;
+  --panel-radius:      0px;
+  --transition-panel:  0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-md:         0 4px 20px rgba(0, 0, 0, 0.08);
+
+  --left-panel-w:  450px;   /* always-open left panel */
+  --right-panel-w: 360px;   /* slides in on simulation */
+}
+
+/* ── Full-viewport shell ── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ─ Dashboard shell: wraps main-content + status-bar ─ */
+.dashboard-shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ═══════════════ MAIN CONTENT ═══════════════ */
+.main-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ═══════════════ LEFT PANEL — always visible ═══════════════ */
+.left-panel {
+  width: var(--left-panel-w);
+  min-width: var(--left-panel-w);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-dim);
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+
+/* Panel header bar (title + action) */
+.left-panel__header {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  height: 44px;
+  min-height: 44px;
+  border-bottom: 1px solid var(--border-dim);
+  background: var(--bg-subtle);
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.left-panel__header-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.left-panel__back-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 4px 8px;
+  border-radius: 5px;
+  transition: background 0.15s;
+}
+
+.left-panel__back-btn:hover {
+  background: var(--accent-bg);
+}
+
+/* Panel body — scrollable */
+.left-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.left-panel__body::-webkit-scrollbar { width: 4px; }
+.left-panel__body::-webkit-scrollbar-track { background: transparent; }
+.left-panel__body::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 4px; }
+
+/* ── Simulate section pinned at bottom of left panel ── */
+.left-panel__simulate {
+  border-top: 1px solid var(--border-dim);
+  padding: 14px 16px;
+  background: var(--bg-subtle);
+  flex-shrink: 0;
+}
+
+.simulate-protocol-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* Radio group */
+.simulate-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.simulate-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: #fff;
+  user-select: none;
+}
+
+.simulate-radio:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.simulate-radio--active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.simulate-radio--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.simulate-radio__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.simulate-radio--active .simulate-radio__dot {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.simulate-radio__text {
+  flex: 1;
+}
+
+.simulate-radio__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+  line-height: 1.3;
+}
+
+.simulate-radio__sublabel {
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 1px;
+}
+
+.simulate-radio__badge {
+  font-size: 9px;
+  color: #9ca3af;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 1px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Simulate button */
+.simulate-btn {
+  width: 100%;
+  padding: 11px 0;
+  background: linear-gradient(135deg, #1a56db 0%, #2563eb 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.18s ease;
+  letter-spacing: 0.2px;
+}
+
+.simulate-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 14px rgba(26, 86, 219, 0.4);
+  transform: translateY(-1px);
+}
+
+.simulate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.simulate-btn__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ═══════════════ GRAPH AREA ═══════════════ */
+.graph-area {
+  flex: 1;
+  position: relative;
+  min-width: 0;      /* critical: allows shrinking */
+  overflow: hidden;
+}
+
+/* ═══════════════ RESIZE HANDLES ═══════════════ */
+.resize-handle {
+  width: 10px;
+  margin: 0 -5px;
+  cursor: col-resize;
+  position: relative;
+  z-index: 25;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+
+.resize-handle:hover,
+.resize-handle--active {
+  background: rgba(26, 86, 219, 0.08);
+}
+
+.resize-handle__indicator {
+  width: 2px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--border-strong);
+  transition: all 0.15s ease;
+}
+
+.resize-handle:hover .resize-handle__indicator,
+.resize-handle--active .resize-handle__indicator {
+  background: var(--accent);
+  height: 48px;
+  width: 3px;
+  box-shadow: 0 0 8px rgba(26, 86, 219, 0.4);
+}
+
+/* Active drag state on container */
+.main-content--resizing {
+  user-select: none !important;
+  cursor: col-resize !important;
+}
+
+.main-content--resizing .left-panel,
+.main-content--resizing .right-panel,
+.main-content--resizing .graph-area {
+  transition: none !important;
+  pointer-events: none;
+}
+
+.main-content--resizing .resize-handle {
+  pointer-events: auto;
+}
+
+/* ═══════════════ RIGHT PANEL — simulation results ═══════════════ */
+.right-panel {
+  width: var(--right-panel-w);
+  min-width: var(--right-panel-w);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-dim);
+  overflow: hidden;
+  position: relative;
+}
+
+.right-panel--open {
+  width: var(--right-panel-w);
+  min-width: var(--right-panel-w);
+}
+
+/* Header bar for the right panel */
+.right-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-dim);
+  background: var(--bg-panel);
+  flex-shrink: 0;
+}
+
+.right-panel__header-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+/* Scrollable body of right panel */
+.right-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.right-panel__body::-webkit-scrollbar { width: 4px; }
+.right-panel__body::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 4px; }
+
+/* ═══════════════ LOADING SCREEN ═══════════════ */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background: #ffffff;
+  color: var(--text-muted);
+  gap: 20px;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e9eaec 50%, #f3f4f6 75%);
+  background-size: 1200px 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.loading-skeleton { width: min(900px, 90vw); display: flex; flex-direction: column; gap: 10px; }
+.skeleton-bar { height: 44px; border-radius: 8px; background: linear-gradient(90deg, #f3f4f6 25%, #e9eaec 50%, #f3f4f6 75%); background-size: 1200px 100%; animation: skeleton-shimmer 1.4s ease-in-out infinite; }
+.skeleton-bar--title { height: 52px; margin-bottom: 6px; }
+.skeleton-row { display: flex; gap: 10px; height: 420px; }
+.skeleton-panel { width: 280px; flex-shrink: 0; border-radius: 8px; background: linear-gradient(90deg, #f3f4f6 25%, #eaebee 50%, #f3f4f6 75%); background-size: 1200px 100%; animation: skeleton-shimmer 1.4s ease-in-out infinite; }
+.skeleton-graph { flex: 1; border-radius: 8px; background: linear-gradient(90deg, #f3f4f6 25%, #ebebed 50%, #f3f4f6 75%); background-size: 1200px 100%; animation: skeleton-shimmer 1.6s ease-in-out infinite; }
+
+.loading-spinner { width: 32px; height: 32px; border: 2px solid #e5e7eb; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.75s linear infinite; }
+.loading-text { font-size: 13px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.2px; }
+
+/* ═══════════════ ERROR SCREEN ═══════════════ */
+.error-screen {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100vh; width: 100vw; background: #ffffff; gap: 14px; text-align: center; padding: 2rem;
+}
+.error-screen__icon { font-size: 40px; opacity: 0.35; }
+.error-screen__message { color: var(--danger); font-weight: 700; font-size: 15px; max-width: 500px; }
+.error-screen__hint { font-size: 13px; color: var(--text-muted); max-width: 520px; line-height: 1.7; }
+.error-screen__hint code { display: inline-block; margin-top: 6px; padding: 4px 10px; background: #f3f4f6; border-radius: 5px; font-family: 'DM Mono', 'Consolas', monospace; font-size: 12px; color: var(--text-secondary); border: 1px solid var(--border-dim); }
+
+/* ═══════════════ SHARED BUTTON ═══════════════ */
+.btn { padding: 9px 20px; cursor: pointer; background: #fff; color: var(--accent); border: 1px solid var(--accent); border-radius: 7px; font-size: 13px; font-weight: 600; font-family: inherit; transition: all 0.18s; }
+.btn:hover { background: var(--accent-bg); }
+
+/* ═══════════════ STATUS BAR ═══════════════ */
+.status-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 18px; height: 26px; min-height: 26px;
+  background: var(--bg-subtle); border-top: 1px solid var(--border-dim);
+  font-size: 11px; color: var(--text-dim); z-index: 30; flex-shrink: 0;
+}
+.status-bar__left, .status-bar__right { display: flex; align-items: center; gap: 14px; }
+.status-bar__item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+.status-dot--error { background: var(--danger); }
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media (max-width: 1024px) {
+  :root {
+    --left-panel-w: 360px;
+    --right-panel-w: 300px;
+  }
+}
+
+@media (max-width: 640px) {
+  .resize-handle {
+    display: none !important;
+  }
+  .left-panel {
+    width: 100%;
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    z-index: 30;
+  }
+  .right-panel--open {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    z-index: 30;
+  }
+}

@@ -1,5 +1,5 @@
 # ==========================================
-# Python / Conda Environment
+# Python / Conda Environment & Caches
 # ==========================================
 env/
 __pycache__/
@@ -10,12 +10,13 @@ build/
 *.egg
 
 # ==========================================
-# Jupyter Notebook checkpoints
+# Jupyter Notebook Checkpoints
 # ==========================================
 .ipynb_checkpoints/
+notebooks/
 
 # ==========================================
-# OS / IDE files
+# OS / IDE / Temp
 # ==========================================
 .DS_Store
 Thumbs.db
@@ -23,21 +24,100 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-
-# ==========================================
-# Google Drive temp files
-# ==========================================
 .tmp.drivedownload/
 .tmp.driveupload/
-
-# ==========================================
-# Node modules (used by md-to-pdf etc.)
-# ==========================================
 node_modules/
-
-# ==========================================
-# Misc
-# ==========================================
+.pytest_cache/
 *.log
 *.tmp
 .env
+
+# ==========================================
+# Agent & Development Scratch (Private)
+# ==========================================
+.agents/
+scratch/
+not_important_supply/
+SCNCC_Showcase/
+AI_AGENT_CONTEXT.md
+CODEBASE_CONTEXT.md
+project_bug_log.md
+phasewiseImplementation.md
+Documentation.md
+prompts.txt
+rough_work.md
+phase*.txt
+phase*.md
+Reading materials/
+SCNCC_Detailed_Roadmap*
+
+# ==========================================
+# Unrelated Projects & Leaked Files
+# ==========================================
+BPCL_Report.tex
+
+# ==========================================
+# Internal Data Engineering & ETL Scripts
+# (Curated Interview Strategy: Keep code clean, avoid ETL traps)
+# ==========================================
+scripts/
+graph/entity_resolution.py
+api/view_db.py
+api/load_data.py
+data/analysis_temp.py
+data/append_group_b.py
+data/impute_subsidiaries.py
+data/scncc.db
+
+# ==========================================
+# Model Weights (Excluded from public repo)
+# ==========================================
+model/weights/
+model/baseline/
+model/gnn/
+*.pt
+
+# ==========================================
+# Heavy Raw & Intermediate Data Caches
+# (Available upon request per README disclosure)
+# ==========================================
+data/external/
+data/raw/company_financials_validated.csv
+data/raw/supply_chain_combined.csv
+data/processed/company_financials_resolved.csv
+data/processed/edge_features_W.csv
+data/processed/entity_index.json
+data/processed/node_features_X.csv
+data/processed/supply_chain_resolved.csv
+
+# ==========================================
+# LaTeX Source & Auxiliary Files (PDF only in repo)
+# ==========================================
+*.aux
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.lof
+*.lot
+docs/*.tex
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.toc
+docs/*.lof
+docs/*.lot
+docs/archived_aspirational_plans/
+docs/decisions.md
+docs/deferred_features.md
+docs/phase*.md
+docs/SCNCC_Research_Report.*
+docs/SCNCC_Technical_Report.*
+
+# ==========================================
+# Frontend Build Artifacts
+# ==========================================
+frontend/node_modules/
+frontend/dist/
+frontend/.eslintcache

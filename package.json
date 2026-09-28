@@ -1,0 +1,10 @@
+{
+  "name": "supply-chain-network-credit-contagion",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --names BACKEND,FRONTEND --prefix-colors blue,green \"uvicorn api.main:app --reload --port 8001\" \"npm run dev --prefix frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -1,0 +1,68 @@
+/* ═══════════════════════════════════════════════════
+   index.css — Global resets & base typography
+   Premium white-light theme — Antigravity.ai inspired
+   ═══════════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #111827;
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+/* ── Link resets ── */
+a {
+  color: #1a56db;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* ── Selection highlight ── */
+::selection {
+  background: rgba(26, 86, 219, 0.12);
+  color: #111827;
+}
+
+/* ── Monospaced numeric class ── */
+.mono {
+  font-family: 'DM Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ── Scrollbar — thin, minimal ── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f9fafb;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}

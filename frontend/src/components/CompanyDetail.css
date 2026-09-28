@@ -1,0 +1,300 @@
+/* ═══════════════════════════════════════════════════
+   CompanyDetail.css — Inline panel content styles
+   No backdrop, no sheet — pure scrollable content
+   ═══════════════════════════════════════════════════ */
+
+/* ── Root content wrapper ── */
+.cd-content {
+  padding: 0 0 120px;  /* bottom pad so simulate button isn't hidden */
+}
+
+/* ── Inline header (replaces the old cd-header) ── */
+.cd-header-inline {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.cd-header-inline__top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.cd-header-inline__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cd-header__ticker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #6b7280;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.cd-header-inline__pd {
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cd-subsidiary-tag {
+  font-size: 9px;
+  color: #9ca3af;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+/* Risk badge */
+.cd-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+}
+
+.cd-badge--high   { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.cd-badge--medium { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.cd-badge--low    { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+
+/* ── Section label ── */
+.cd-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #9ca3af;
+  padding: 10px 16px 5px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* ── Metric grids ── */
+.cd-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: #f0f0f0;
+  margin: 0;
+}
+
+.cd-metrics-grid--3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: #f0f0f0;
+  margin: 0;
+}
+
+.cd-metric-card {
+  background: #ffffff;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cd-metric-card--good   { border-left: 2px solid #059669; }
+.cd-metric-card--bad    { border-left: 2px solid #dc2626; }
+.cd-metric-card--neutral { border-left: 2px solid #e5e7eb; }
+
+.cd-metric__label {
+  font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.cd-metric__value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cd-metric__value--good    { color: #059669; }
+.cd-metric__value--bad     { color: #dc2626; }
+.cd-metric__value--neutral { color: #374151; }
+
+/* ── Data confidence ── */
+.cd-confidence-wrap {
+  padding: 8px 16px;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+}
+
+.cd-confidence-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #9ca3af;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.cd-confidence-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cd-confidence-bar__track {
+  flex: 1;
+  height: 5px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cd-confidence-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1a56db, #60a5fa);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.cd-confidence-bar__label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6b7280;
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Network row ── */
+.cd-network-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: #f0f0f0;
+}
+
+/* ── Connections — new grouped layout ── */
+
+/* Direction headers: ⬅ Inbound / Outbound ➡ */
+.cd-conn-header {
+  padding: 6px 16px 2px;
+}
+
+.cd-conn-direction {
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+}
+
+.cd-conn-direction--in  { color: #1a56db; }
+.cd-conn-direction--out { color: #059669; }
+
+/* RelGroup: one block per relationship type */
+.cd-rel-group {
+  margin: 0 0 4px;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 3px;
+}
+
+.cd-rel-group__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 16px 3px;
+  background: #fafafa;
+}
+
+.cd-rel-group__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cd-rel-group__label {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #374151;
+  cursor: pointer;
+  flex: 1;
+}
+
+.cd-rel-group__count {
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  background: #9ca3af;
+  padding: 1px 5px;
+  border-radius: 8px;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* Shared conn list */
+.cd-conn-list {
+  list-style: none;
+  padding: 0 16px;
+  margin: 0;
+}
+
+.cd-conn-empty-full {
+  padding: 5px 16px;
+  font-size: 11px;
+  color: #d1d5db;
+  font-style: italic;
+}
+
+.cd-conn-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid #f9fafb;
+  gap: 4px;
+}
+
+.cd-conn-item__name {
+  font-size: 11px;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.cd-conn-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.cd-conn-item__pd {
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
