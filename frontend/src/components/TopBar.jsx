@@ -106,14 +106,14 @@ function TopBar({
           onClick={onResetLayout}
           title="Reset all pinned nodes and reheat the force simulation (R)"
         >
-          ↻ Reset Layout
+          Reset Layout
         </button>
         <button
           className="topbar__btn"
           onClick={onFitToView}
           title="Zoom to fit all nodes into view (F)"
         >
-          ⊞ Fit to View
+          Fit to View
         </button>
 
         {/* About button — opens the full project about page */}
@@ -122,7 +122,7 @@ function TopBar({
           onClick={onAbout}
           title="Learn about this project, its methodology, and data sources"
         >
-          ℹ About
+          About
         </button>
       </div>
 

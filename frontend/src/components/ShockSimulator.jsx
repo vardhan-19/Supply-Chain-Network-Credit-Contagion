@@ -433,10 +433,7 @@ const ShockSimulator = memo(function ShockSimulator({
               <span>Simulating Cascade...</span>
             </>
           ) : (
-            <>
-              <span>⚡</span>
-              <span>{shockType === 'edge_removal' ? 'Simulate Edge Severance' : 'Simulate Default Cascade'}</span>
-            </>
+            <span>{shockType === 'edge_removal' ? 'Simulate Edge Severance' : 'Simulate Default Cascade'}</span>
           )}
         </button>
       </div>

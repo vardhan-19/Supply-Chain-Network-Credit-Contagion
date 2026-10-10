@@ -41,6 +41,9 @@ static_offiline_folder/
 # ==========================================
 # Agent & Development Scratch (Private)
 # ==========================================
+ai_files/
+README_Supply.md
+SUMMARY_Supply.md
 .agents/
 scratch/
 not_important_supply/
