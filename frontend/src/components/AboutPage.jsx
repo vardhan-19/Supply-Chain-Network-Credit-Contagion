@@ -2,14 +2,10 @@ import React from 'react';
 import './AboutPage.css';
 
 /**
- * AboutPage — Full in-app page (not a modal) rendered inside the app-shell.
- * Replaces the dashboard content when "About" is clicked in TopBar.
- *
- * Designed to give an ML / Finance interviewer a crisp, technical overview
- * of the project without overwhelming detail.
+ * AboutPage — In-app overview page providing model, dataset, and financial methodology context.
  *
  * Props:
- *   onClose  – callback to return to the dashboard
+ *   onClose – callback to return to the dashboard
  */
 function AboutPage({ onClose }) {
   return (

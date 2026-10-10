@@ -1,14 +1,16 @@
+import os
+import sys
+from contextlib import asynccontextmanager
+
+import numpy as np
+import pandas as pd
+import torch
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import numpy as np
-import pandas as pd
-import os
-import sys
-import torch
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(base_dir) # Make root importable for scripts run directly
+sys.path.append(base_dir)
 
 from model.gnn_dataset import build_dataset
 from model.gnn_model import SupplyChainGNN
@@ -19,7 +21,6 @@ class SimulateRequest(BaseModel):
     shock_type: str = "node_removal"
     source_company_id: str = None
 
-# --- Global Cache for API Performance Optimization ---
 GLOBAL_STATE = {
     "model": None,
     "data": None,
@@ -58,14 +59,21 @@ def load_globals():
     model.eval()
     GLOBAL_STATE["model"] = model
 
-# --- Initializing the FastAPI Application Skeleton ---
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        load_globals()
+    except Exception as e:
+        print(f"Warning: Could not load model/data at startup: {e}")
+    yield
+
 app = FastAPI(
     title="Supply Chain Network Credit Contagion API",
-    description="Quantitative credit risk framework modeling systemic default contagion across the automotive manufacturing supply network using Graph Neural Networks and Basel III regulatory capital formulations. Grounded in research by Mojdehi et al. (IEEE Access, 2025), Liu (ACM AIDF, 2025), Geng et al. (PLoS ONE, 2024), and Basel III F-IRB (2017).",
-    version="1.0.0"
+    description="REST API for credit contagion stress testing and GNN default predictions.",
+    version="1.0.0",
+    lifespan=lifespan
 )
 
-# Security: explicit allowed origins only — wildcard + credentials is rejected by browsers
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -78,14 +86,6 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )
-
-@app.on_event("startup")
-def startup_event():
-    try:
-        load_globals()
-        print("Successfully loaded model and dataset into memory.")
-    except Exception as e:
-        print(f"Warning: Could not load model/data at startup: {e}")
 
 @app.get("/health")
 def health_check():
@@ -157,36 +157,29 @@ def get_graph():
         tier_clean = str(r_tier) if pd.notna(r_tier) and str(r_tier).strip() else "Low"
 
         nodes.append({
-            # Identity
-            "id":               entity_id,
-            "name":             name_str,
-            "ticker":           ticker_str,
-            "is_subsidiary":    is_sub,
-            "data_confidence":  conf_str,
-
-            # Core financials
-            "revenue":          safe_float('revenue'),
-            "total_debt":       safe_float('total_debt'),
-            "market_cap":       safe_float('market_cap'),
-            "current_ratio":    safe_float('current_ratio'),
-            "debt_to_equity":   safe_float('debt_to_equity'),
-            "profit_margin":    safe_float('profit_margin'),
-            "revenue_growth":   safe_float('revenue_growth'),
-            "interest_coverage":safe_float('interest_coverage'),
-            "roa":              safe_float('roa'),
-
-            # Network topology
-            "betweenness":           safe_float('betweenness_centrality'),
-            "pagerank":              safe_float('pagerank'),
-            "in_degree":             safe_float('in_degree'),
-            "out_degree":            safe_float('out_degree'),
-            "eigenvector_centrality":safe_float('eigenvector_centrality'),
-            "clustering_coefficient":safe_float('clustering_coefficient'),
-
-            # Credit / ML labels
-            "default_label":    d_label,
-            "pd":               pd_clean,
-            "risk_tier":        tier_clean,
+            "id": entity_id,
+            "name": name_str,
+            "ticker": ticker_str,
+            "is_subsidiary": is_sub,
+            "data_confidence": conf_str,
+            "revenue": safe_float('revenue'),
+            "total_debt": safe_float('total_debt'),
+            "market_cap": safe_float('market_cap'),
+            "current_ratio": safe_float('current_ratio'),
+            "debt_to_equity": safe_float('debt_to_equity'),
+            "profit_margin": safe_float('profit_margin'),
+            "revenue_growth": safe_float('revenue_growth'),
+            "interest_coverage": safe_float('interest_coverage'),
+            "roa": safe_float('roa'),
+            "betweenness": safe_float('betweenness_centrality'),
+            "pagerank": safe_float('pagerank'),
+            "in_degree": safe_float('in_degree'),
+            "out_degree": safe_float('out_degree'),
+            "eigenvector_centrality": safe_float('eigenvector_centrality'),
+            "clustering_coefficient": safe_float('clustering_coefficient'),
+            "default_label": d_label,
+            "pd": pd_clean,
+            "risk_tier": tier_clean,
         })
         
     id_to_name = {

@@ -79,13 +79,12 @@ def build_dataset(nodes_csv: str, edges_csv: str) -> Data:
     data.train_mask = train_mask
     data.test_mask = test_mask
     
-    # Attach raw (unscaled) revenue for EAD calculations in Phase 5 simulation
+    # Attach unscaled revenue for downstream EAD calculations in stress testing
     if 'revenue' in df_nodes.columns:
         raw_revenues = df_nodes['revenue'].fillna(0).values
         data.raw_revenue = torch.tensor(raw_revenues, dtype=torch.float32)
 
-    
-    # Attach UUID mappings for Phase 5 simulation mapping
+    # Attach entity mappings for node lookup
     data.entity_to_idx = entity_to_idx
     data.idx_to_entity = {idx: entity_id for entity_id, idx in entity_to_idx.items()}
     

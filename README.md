@@ -179,9 +179,9 @@ npm run dev
 - **API Documentation:** `http://localhost:8001/docs`
 - **Health Check:** `http://localhost:8001/health`
 
-### Automated Verification
+### Automated Testing
 ```bash
-python tests/test_extensive_audit.py
+pytest
 ```
 
 ---
@@ -192,6 +192,7 @@ python tests/test_extensive_audit.py
 Supply-Chain-Network-Credit-Contagion/
 ├── README.md                    # Project documentation & architecture
 ├── SUMMARY.md                   # Mathematical monograph & proofs
+├── pytest.ini                   # Pytest discovery configuration
 ├── requirements.txt             # Pip dependency specifications
 ├── environment.yml              # Conda environment specifications
 ├── package.json                 # Dev process orchestrator
@@ -214,9 +215,11 @@ Supply-Chain-Network-Credit-Contagion/
 ├── frontend/                    # React 19 + WebGL dashboard
 ├── data/
 │   ├── raw/anchor_companies.csv # Reference seed company dataset
-│   └── processed/               # Data validation records
+│   └── processed/               # Multi-relational edge & feature matrices
 ├── tests/
-│   └── test_extensive_audit.py  # End-to-end multi-feature test suite
+│   ├── test_api.py              # REST API endpoint and contract tests
+│   ├── test_simulation.py       # Stress testing & risk calculation tests
+│   └── test_graph.py            # Graph construction and centrality tests
 └── docs/
     └── SCNCC_Project_Report.pdf # Academic monograph (PDF)
 ```

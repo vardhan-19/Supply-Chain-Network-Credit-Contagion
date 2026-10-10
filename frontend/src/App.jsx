@@ -12,14 +12,7 @@ import { fetchGraphData, runSimulation } from './services/api';
 import './App.css';
 
 /**
- * App.jsx — Root dashboard component — v3
- *
- * Key changes vs v2:
- *  - Startup: silent background polling (no scary error screen during backend warmup).
- *    The loading screen waits patiently; only shows the real error screen if the
- *    backend never responds after MAX_RETRIES.
- *  - About page replaces the dashboard area (not a modal overlay).
- *  - Fixed JSX fragment structure (no orphaned </div>).
+ * App.jsx — Supply Chain Network Credit Contagion main dashboard.
  */
 function App() {
   // ═══ Core state ═══

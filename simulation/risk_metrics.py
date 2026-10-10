@@ -1,15 +1,14 @@
 def calculate_ead(revenue):
     """
     Convert revenue into Exposure at Default (EAD).
-    Calibrated following Basel III Foundation IRB turnover proxy: EAD = 0.15 * Revenue
-    (Basel Committee on Banking Supervision, 2017).
+    Uses standard 15% revenue turnover proxy: EAD = 0.15 * Revenue.
     """
     return revenue * 0.15
 
 def calculate_expected_loss(pd, ead, lgd=0.45):
     """
     Calculate Expected Loss (EL): EL = PD * LGD * EAD.
-    Regulatory senior unsecured benchmark: LGD = 0.45 (Basel Committee, 2017).
+    Default senior unsecured benchmark uses LGD = 0.45.
     """
     return pd * lgd * ead
 
@@ -17,20 +16,13 @@ def calculate_systemic_risk(baseline_pds, shocked_pds, revenues, idx_to_entity, 
     """
     Calculate the Systemic Risk Contribution (SRC) and identify affected counterparties.
     
-    Academic Foundations:
-    - Basel III F-IRB Expected Loss: Basel Committee on Banking Supervision (2017).
-    - Network Contagion & Systemic Risk: Eisenberg & Noe (2001), Gai & Kapadia (2010).
-    - Excludes target entity from downstream summation to isolate pure transmission loss.
-    
     Args:
         baseline_pds: Baseline default probabilities.
         shocked_pds: Post-shock default probabilities.
         revenues: Node revenues for EAD calculation.
         idx_to_entity: Mapping from integer index to company UUID.
-        target_idx: Optional integer index of the primary shocked/defaulted company.
-                    If provided (e.g. for node_removal), this node is excluded from
-                    systemic loss and affected nodes, because a firm cannot be a
-                    downstream contagion victim of its own primary default.
+        target_idx: Optional integer index of the shocked company to exclude from
+                    downstream contagion loss.
     """
     total_systemic_loss_increase = 0.0
     affected_nodes = []

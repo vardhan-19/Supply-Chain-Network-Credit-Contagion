@@ -4,36 +4,25 @@ from torch_geometric.data import Data
 
 def apply_node_shock(data: Data, target_node_idx: int) -> Data:
     """
-    Simulates a company bankruptcy (Shock Injection - Node Removal (SCR-NR)).
-    
-    Academic Foundations:
-    - Default Cascades in Interconnected Networks: Gai & Kapadia (2010), Eisenberg & Noe (2001).
-    - Asymmetric Contagion & Liquidation: Geng et al. (PLoS ONE 2024).
-    - Removes all incident edges and annihilates balance sheet features to 0.
+    Simulates firm insolvency via node removal (SCR-NR).
+    Removes all incident edges and zeroes out node features for the shocked firm.
     
     Args:
         data: The original PyTorch Geometric Data object.
-        target_node_idx: The integer index of the node to shock (simulate bankruptcy).
+        target_node_idx: The integer index of the node to shock.
         
     Returns:
-        A new Data object with the target node's edges removed and features zeroed out.
+        A new Data object with target edges removed and features zeroed.
     """
-    # Deep copy to avoid mutating the original data (clone() is shallow and shares memory)
     shocked_data = copy.deepcopy(data)
     
-    # Find all edges where the source or target is target_node_idx and remove them
     edge_index = shocked_data.edge_index
     mask = (edge_index[0] != target_node_idx) & (edge_index[1] != target_node_idx)
     
-    # Update edge_index to match the new masked edges
     shocked_data.edge_index = edge_index[:, mask]
-    
-    # Update edge_attr to match the new edge_index
     if shocked_data.edge_attr is not None:
         shocked_data.edge_attr = shocked_data.edge_attr[mask]
         
-    # Set the target node's features in data.x to reflect bankruptcy 
-    # Zeroing out all features to represent e.g., revenue to 0, extreme state
     if shocked_data.x is not None:
         shocked_data.x[target_node_idx] = 0.0
         
@@ -41,11 +30,7 @@ def apply_node_shock(data: Data, target_node_idx: int) -> Data:
 
 def apply_edge_shock(data: Data, source_idx: int, target_idx: int) -> Data:
     """
-    Simulates a severed supply or credit line (Shock Injection - Edge Removal (SCR-ER)).
-    
-    Academic Foundations:
-    - Bilateral Contract Rupture & Embargoes: Acemoglu, Ozdaglar, & Tahbaz-Salehi (2015).
-    - Supply Chain Embargo Contagion: Geng et al. (PLoS ONE 2024).
+    Simulates a bilateral supply or credit line severance (SCR-ER).
     
     Args:
         data: The original PyTorch Geometric Data object.
@@ -53,7 +38,7 @@ def apply_edge_shock(data: Data, source_idx: int, target_idx: int) -> Data:
         target_idx: The integer index of the target node.
         
     Returns:
-        A new Data object with exactly one edge removed (if it existed).
+        A new Data object with the specified directed edge removed.
     """
     # Deep copy to avoid mutating the original data (clone() is shallow and shares memory)
     shocked_data = copy.deepcopy(data)
