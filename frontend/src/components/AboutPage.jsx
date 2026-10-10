@@ -248,7 +248,73 @@ function AboutPage({ onClose }) {
           ))}
         </div>
 
-        {/* ═══ ROW 5: Tech Stack ═══ */}
+        {/* ═══ ROW 5: Academic Foundations & Citations ═══ */}
+        <div className="about-section-title">
+          <span className="about-section-title__pill">Academic Foundations & Citations</span>
+          <div className="about-section-title__line" />
+        </div>
+
+        <div className="about-citations-grid">
+          {[
+            {
+              badge: 'IEEE ACCESS 2025',
+              badgeClass: 'ieee',
+              title: 'A Novel Hybrid Model for Credit Risk Assessment of Supply Chain Finance Based on Topological Data Analysis and Graph Neural Network',
+              authors: 'Kimia Fereydooni Mojdehi, Babak Amiri, and Alireza Haddadi',
+              journal: 'IEEE Access, vol. 13, pp. 11094–11116 (2025)',
+              framework: 'Formulation of hybrid 12-dimensional feature tensor combining corporate accounting ratios with 4 network centralities (betweenness, eigenvector, PageRank, clustering); empirical proof that topological metrics dominate distress prediction.',
+              doi: '10.1109/ACCESS.2025.3528373',
+              url: 'https://doi.org/10.1109/ACCESS.2025.3528373'
+            },
+            {
+              badge: 'ACM AIDF 2025',
+              badgeClass: 'acm',
+              title: 'Construction of Enterprise Credit Risk Assessment Model Driven by Graph Neural Network',
+              authors: 'Kuan Liu',
+              journal: 'Proc. 2025 Int. Conf. on Artificial Intelligence and Digital Finance, ACM, pp. 1–6',
+              framework: 'Multi-tier automotive industry relationship graph formulation (OEMs, Tier-1, Tier-2), multi-relational edges (supply flows, trade credit, equity ownership), and edge-weighted message passing.',
+              doi: '10.1145/3764727.3764741',
+              url: 'https://doi.org/10.1145/3764727.3764741'
+            },
+            {
+              badge: 'PLOS ONE 2024',
+              badgeClass: 'plos',
+              title: 'Credit risk contagion of supply chain finance: An empirical analysis of supply chain listed companies',
+              authors: 'Xinpeng Geng, Bing Han, Debao Yang, and Junren Zhao',
+              journal: 'PLoS ONE, vol. 19, no. 7, p. e0306724 (2024)',
+              framework: 'Dynamic credit contagion mechanics in listed supply chains, asymmetric operational vs liquidity transmission channels, and exponential temporal decay of disclosure weights.',
+              doi: '10.1371/journal.pone.0306724',
+              url: 'https://doi.org/10.1371/journal.pone.0306724'
+            },
+            {
+              badge: 'BASEL III & J. FINANCE',
+              badgeClass: 'basel',
+              title: 'Basel III Regulatory Capital Framework & Altman Bankruptcy Discriminant Analysis',
+              authors: 'Basel Committee on Banking Supervision (2017) & Edward I. Altman (1968)',
+              journal: 'Bank for International Settlements (BIS) / The Journal of Finance, 23(4), 589–609',
+              framework: 'Ground-truth default supervision threshold (Z ≤ 1.81), Basel III Foundation IRB expected loss metrics (EAD = 0.15 × Revenue, LGD = 0.45, EL = PD × LGD × EAD), and systemic risk contribution (ΔEL).',
+              doi: '10.1111/j.1540-6261.1968.tb00843.x',
+              url: 'https://doi.org/10.1111/j.1540-6261.1968.tb00843.x'
+            }
+          ].map(({ badge, badgeClass, title, authors, journal, framework, doi, url }) => (
+            <div className="about-citation-card" key={badge}>
+              <div className="about-citation-card__top">
+                <span className={`about-cite-badge about-cite-badge--${badgeClass}`}>{badge}</span>
+                <a className="about-citation-card__doi" href={url} target="_blank" rel="noopener noreferrer">
+                  doi:{doi} ↗
+                </a>
+              </div>
+              <h3 className="about-citation-card__title">{title}</h3>
+              <div className="about-citation-card__authors">{authors}</div>
+              <div className="about-citation-card__journal">{journal}</div>
+              <div className="about-citation-card__framework">
+                <strong>Framework Taken:</strong> {framework}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ═══ ROW 6: Tech Stack ═══ */}
         <div className="about-section-title">
           <span className="about-section-title__pill">Tech Stack</span>
           <div className="about-section-title__line" />

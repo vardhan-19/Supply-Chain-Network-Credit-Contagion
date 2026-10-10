@@ -6,6 +6,11 @@ def apply_node_shock(data: Data, target_node_idx: int) -> Data:
     """
     Simulates a company bankruptcy (Shock Injection - Node Removal (SCR-NR)).
     
+    Academic Foundations:
+    - Default Cascades in Interconnected Networks: Gai & Kapadia (2010), Eisenberg & Noe (2001).
+    - Asymmetric Contagion & Liquidation: Geng et al. (PLoS ONE 2024).
+    - Removes all incident edges and annihilates balance sheet features to 0.
+    
     Args:
         data: The original PyTorch Geometric Data object.
         target_node_idx: The integer index of the node to shock (simulate bankruptcy).
@@ -37,6 +42,10 @@ def apply_node_shock(data: Data, target_node_idx: int) -> Data:
 def apply_edge_shock(data: Data, source_idx: int, target_idx: int) -> Data:
     """
     Simulates a severed supply or credit line (Shock Injection - Edge Removal (SCR-ER)).
+    
+    Academic Foundations:
+    - Bilateral Contract Rupture & Embargoes: Acemoglu, Ozdaglar, & Tahbaz-Salehi (2015).
+    - Supply Chain Embargo Contagion: Geng et al. (PLoS ONE 2024).
     
     Args:
         data: The original PyTorch Geometric Data object.

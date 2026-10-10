@@ -5,6 +5,12 @@ def compute_topological_metrics(G):
     """
     Computes structural risk metrics for every node in the graph based on their network position.
     Returns a pandas DataFrame keyed by entity_id.
+    
+    Academic Foundations:
+    - Topological Risk Indicators: Mojdehi, Amiri, & Haddadi (IEEE Access 2025)
+      demonstrated that integrating network topological centralities (Betweenness Centrality,
+      Eigenvector Centrality, PageRank, Clustering Coefficient) with financial accounting
+      ratios provides decisive predictive power for supply chain credit distress.
     """
     in_degree = dict(G.in_degree())
     out_degree = dict(G.out_degree())

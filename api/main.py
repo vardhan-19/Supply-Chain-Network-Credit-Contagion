@@ -59,7 +59,11 @@ def load_globals():
     GLOBAL_STATE["model"] = model
 
 # --- Initializing the FastAPI Application Skeleton ---
-app = FastAPI(title="Supply Chain Network Credit Contagion API")
+app = FastAPI(
+    title="Supply Chain Network Credit Contagion API",
+    description="Quantitative credit risk framework modeling systemic default contagion across the automotive manufacturing supply network using Graph Neural Networks and Basel III regulatory capital formulations. Grounded in research by Mojdehi et al. (IEEE Access, 2025), Liu (ACM AIDF, 2025), Geng et al. (PLoS ONE, 2024), and Basel III F-IRB (2017).",
+    version="1.0.0"
+)
 
 # Security: explicit allowed origins only — wildcard + credentials is rejected by browsers
 app.add_middleware(

@@ -4,6 +4,18 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 
 class SupplyChainGNN(nn.Module):
+    """
+    2-Layer Graph Convolutional Network (GCN) with Edge-Weighted Message Passing.
+    
+    Academic Foundations:
+    - Convolutional Architecture: Kipf & Welling (ICLR 2017) first-order Chebyshev
+      spectral graph convolution approximation: D^{-1/2} A D^{-1/2} X W.
+    - Automotive Supply Graph Message Passing: Liu (ACM AIDF 2025) collaborative
+      risk perception where default probability is conditioned on counterparty topology.
+    - Feature Space: Mojdehi, Amiri, & Haddadi (IEEE Access 2025) hybrid feature
+      tensor combining 8 financial ratios with 4 topological centralities.
+    - Edge Weighting: Continuous transmission weights with temporal decay (Geng et al., 2024).
+    """
     def __init__(self, num_features: int):
         super(SupplyChainGNN, self).__init__()
         

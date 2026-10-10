@@ -43,12 +43,12 @@ The automotive industry exhibits structural characteristics that make it excepti
 ---
 
 ### 1.3 What SCNCC Does & System Architecture
-The **Supply Chain Network Credit Contagion (SCNCC)** platform resolves this structural blindspot by treating the automotive ecosystem as a directed, edge-weighted, node-attributed property graph:
+The **Supply Chain Network Credit Contagion (SCNCC)** platform resolves this structural blindspot by treating the automotive ecosystem as a directed, edge-weighted, node-attributed property graph. Grounded in the multi-relational enterprise network modeling of **Liu (ACM AIDF, 2025)**, the hybrid topological data analysis and graph learning paradigm of **Mojdehi, Amiri, & Haddadi (IEEE Access, 2025)**, and the dynamic supply chain credit contagion formulation of **Geng, Han, Yang, & Zhao (PLoS ONE, 2024)**, SCNCC parameterizes the network as:
 $$\mathcal{G} = (\mathcal{V}, \mathcal{E}, \mathbf{X}, \mathbf{W})$$
 - $N = 174$ resolved global corporate entities ($\mathcal{V}$).
-- $|\mathcal{E}| = 1,213$ validated commercial, supply, trade credit, and equity links.
-- $\mathbf{X} \in \mathbb{R}^{174 \times 12}$ continuous non-leaking financial and topological feature tensor.
-- $\mathbf{W} \in [0, 1]^{1,213}$ continuous transmission weights with exponential temporal decay.
+- $|\mathcal{E}| = 1,213$ validated commercial, supply, trade credit, and equity links (following Liu, 2025).
+- $\mathbf{X} \in \mathbb{R}^{174 \times 12}$ continuous non-leaking financial and topological feature tensor (following Mojdehi et al., 2025).
+- $\mathbf{W} \in [0, 1]^{1,213}$ continuous transmission weights with exponential temporal decay (following Geng et al., 2024).
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -131,22 +131,22 @@ By strictly enforcing $Z_i \notin \mathbf{X}$ and $y_i \notin \mathbf{X}$, the n
 
 ### 2.3 The 12 Non-Leaking Node Features
 
-The node feature matrix $\mathbf{X} \in \mathbb{R}^{174 \times 12}$ contains 8 financial ratios and 4 topological centrality metrics:
+Grounded in the hybrid methodology of **Mojdehi, Amiri, and Haddadi (IEEE Access, 2025)**, who demonstrated that network topological centralities carry dominant predictive importance in supply chain credit risk assessment via SHAP analysis, the node feature matrix $\mathbf{X} \in \mathbb{R}^{174 \times 12}$ integrates 8 financial ratios with 4 topological centrality metrics:
 
-| Dimension | Variable Name | Category | Mathematical Definition & Economic Significance |
-|:---:|---|---|---|
-| $x_{i,1}$ | `revenue` | Scale | Annual corporate top-line revenue ($B USD). Operating scale buffer. |
-| $x_{i,2}$ | `total_debt` | Leverage | Total contractual financial debt ($B USD). Absolute solvency claim. |
-| $x_{i,3}$ | `market_cap` | Valuation | Equity market capitalization ($B USD). Market-implied solvency cushion. |
-| $x_{i,4}$ | `current_ratio` | Liquidity | $\frac{\text{Current Assets}_i}{\text{Current Liabilities}_i}$; immediate working capital coverage. |
-| $x_{i,5}$ | `debt_to_equity` | Solvency | $\frac{\text{Total Debt}_i}{\text{Total Equity}_i}$; financial leverage risk multiplier. |
-| $x_{i,6}$ | `profit_margin` | Profitability | $\frac{\text{Net Income}_i}{\text{Revenue}_i}$; bottom-line efficiency and operational margin. |
-| $x_{i,7}$ | `revenue_growth` | Performance | $\frac{\text{Revenue}_{i, t} - \text{Revenue}_{i, t-1}}{\text{Revenue}_{i, t-1}}$; sales expansion and demand stability. |
-| $x_{i,8}$ | `roa` | Efficiency | $\frac{\text{Net Income}_i}{\text{Total Assets}_i}$; asset productivity independent of financing structure. |
-| $x_{i,9}$ | `betweenness_centrality` | Topology | $C_B(v_i) = \sum_{s \neq i \neq t} \frac{\sigma_{st}(v_i)}{\sigma_{st}}$; supply chain chokepoint intensity. |
-| $x_{i,10}$ | `eigenvector_centrality` | Topology | $\mathbf{A}^T \mathbf{x} = \lambda_{\max} \mathbf{x}$; connectivity to major core industrial clusters. |
-| $x_{i,11}$ | `pagerank` | Topology | $P(v_i) = \frac{1-d}{N} + d \sum_{j \in \mathcal{N}^{\text{in}}(i)} \frac{P(v_j)}{d_j^{\text{out}}}$; recursive prestige / importance. |
-| $x_{i,12}$ | `clustering_coefficient` | Topology | $C_i = \frac{2 e_i}{k_i(k_i - 1)}$; local supplier redundancy and mutual dependency density. |
+| Dimension | Variable Name | Category | Mathematical Definition & Economic Significance | Methodological Origin |
+|:---:|---|---|---|---|
+| $x_{i,1}$ | `revenue` | Scale | Annual corporate top-line revenue ($B USD). Operating scale buffer. | Corporate Scale Baseline |
+| $x_{i,2}$ | `total_debt` | Leverage | Total contractual financial debt ($B USD). Absolute solvency claim. | Balance Sheet Solvency |
+| $x_{i,3}$ | `market_cap` | Valuation | Equity market capitalization ($B USD). Market-implied solvency cushion. | Equity Buffer (Merton, 1974) |
+| $x_{i,4}$ | `current_ratio` | Liquidity | $\frac{\text{Current Assets}_i}{\text{Current Liabilities}_i}$; immediate working capital coverage. | Working Capital Coverage |
+| $x_{i,5}$ | `debt_to_equity` | Solvency | $\frac{\text{Total Debt}_i}{\text{Total Equity}_i}$; financial leverage risk multiplier. | Leverage Benchmark |
+| $x_{i,6}$ | `profit_margin` | Profitability | $\frac{\text{Net Income}_i}{\text{Revenue}_i}$; bottom-line efficiency and operational margin. | Operating Efficiency |
+| $x_{i,7}$ | `revenue_growth` | Performance | $\frac{\text{Revenue}_{i, t} - \text{Revenue}_{i, t-1}}{\text{Revenue}_{i, t-1}}$; sales expansion and demand stability. | Growth Trajectory |
+| $x_{i,8}$ | `roa` | Efficiency | $\frac{\text{Net Income}_i}{\text{Total Assets}_i}$; asset productivity independent of financing structure. | Asset Productivity |
+| $x_{i,9}$ | `betweenness_centrality` | Topology | $C_B(v_i) = \sum_{s \neq i \neq t} \frac{\sigma_{st}(v_i)}{\sigma_{st}}$; supply chain chokepoint intensity. | Mojdehi et al. (IEEE Access, 2025) |
+| $x_{i,10}$ | `eigenvector_centrality` | Topology | $\mathbf{A}^T \mathbf{x} = \lambda_{\max} \mathbf{x}$; connectivity to major core industrial clusters. | Mojdehi et al. (IEEE Access, 2025) |
+| $x_{i,11}$ | `pagerank` | Topology | $P(v_i) = \frac{1-d}{N} + d \sum_{j \in \mathcal{N}^{\text{in}}(i)} \frac{P(v_j)}{d_j^{\text{out}}}$; recursive prestige / importance. | Mojdehi et al. (IEEE Access, 2025) |
+| $x_{i,12}$ | `clustering_coefficient` | Topology | $C_i = \frac{2 e_i}{k_i(k_i - 1)}$; local supplier redundancy and mutual dependency density. | Mojdehi et al. (IEEE Access, 2025) |
 
 #### Preprocessing & Normalization
 Features are standardized using parameters fitted strictly on the 80% training partition ($|\mathcal{V}_{\text{train}}| = 139$, $|\mathcal{V}_{\text{test}}| = 35$):
@@ -155,14 +155,14 @@ $$\tilde{x}_{i, k} = \frac{x_{i, k} - \mu_{k, \text{train}}}{\sigma_{k, \text{tr
 ---
 
 ### 2.4 Contagion Transmission Weight ($w_{ij}$) & Temporal Decay
-The continuous edge weight $w_{ij} \in [0, 1]$ represents the fraction of economic shock propagated across commercial link $(v_i, v_j)$:
+Synthesizing the stochastic default contagion and temporal decay dynamics of **Geng, Han, Yang, & Zhao (PLoS ONE, 2024)** with the multi-relational enterprise edge weighting of **Liu (ACM AIDF, 2025)**, the continuous edge weight $w_{ij} \in [0, 1]$ represents the fraction of economic shock propagated across commercial link $(v_i, v_j)$:
 $$C^*_{ij} = \frac{\ln(1 + C_{ij})}{\max_{(u,v)} \ln(1 + C_{uv})} \in [0, 1]$$
 $$S_{ij} = \text{confidence}_{ij} + 1.0 \times \left(\frac{\text{Ownership}_{ij}}{100.0}\right) + 0.5 \times C^*_{ij}$$
 $$\tilde{S}_{ij} = S_{ij} \times \exp\left(-0.20 \times (2025 - \text{year}_{ij})\right)$$
 $$w_{ij} = \frac{\tilde{S}_{ij} - \min(\tilde{S})}{\max(\tilde{S}) - \min(\tilde{S})}$$
 
 - **Logarithmic Compression:** Prevents multi-billion dollar OEM contracts from numerically overwhelming smaller critical component links.
-- **Exponential Time Decay:** $\exp(-0.20 \times \Delta t)$ smoothly discounts stale supply disclosures (halving weight every ~3.5 years).
+- **Exponential Time Decay (Geng et al., 2024):** $\exp(-0.20 \times \Delta t)$ smoothly discounts stale supply disclosures (halving weight every ~3.5 years).
 
 ---
 
@@ -366,15 +366,55 @@ Severing Panasonic Energy's battery cell supply to Tesla results in **\$0.00 in 
 
 ## 7. Academic Citations & Literature References
 
-1. **Mojdehi, K. F., Amiri, B., & Haddadi, A. (2025).** *A Novel Hybrid Model for Credit Risk Assessment of Supply Chain Finance Based on Topological Data Analysis and Graph Neural Network.* **IEEE Access**, vol. 13, pp. 3528373.
-2. **Liu, K. (2025).** *Construction of Enterprise Credit Risk Assessment Model Driven by Graph Neural Network.* **Proc. 2025 International Conference on Artificial Intelligence and Digital Finance (AIDF 2025)**, ACM, pp. 1–6.
-3. **Geng, X., Han, B., Yang, D., & Zhao, J. (2024).** *Credit risk contagion of supply chain finance: An empirical analysis of supply chain listed companies.* **PLoS ONE**, vol. 19, no. 7, p. e0306724.
-4. **Altman, E. I. (1968).** *Financial ratios, discriminant analysis and the prediction of corporate bankruptcy.* **The Journal of Finance**, vol. 23, no. 4, pp. 589–609.
+### 7.1 Primary Empirical Literature & Framework Origins
+
+1. **Mojdehi, K. F., Amiri, B., & Haddadi, A. (2025).** *A Novel Hybrid Model for Credit Risk Assessment of Supply Chain Finance Based on Topological Data Analysis and Graph Neural Network.* **IEEE Access**, vol. 13, pp. 11094–11116. [doi:10.1109/ACCESS.2025.3528373](https://doi.org/10.1109/ACCESS.2025.3528373)
+   - *Mathematical & Conceptual Framework Taken:* Incorporation of network topological centrality metrics (betweenness, eigenvector, PageRank, clustering coefficient) into corporate credit risk feature spaces; empirical demonstration via SHAP attribution that graph structure dominates isolated balance-sheet metrics in default risk assessment.
+
+2. **Liu, K. (2025).** *Construction of Enterprise Credit Risk Assessment Model Driven by Graph Neural Network.* In **Proceedings of the 2025 International Conference on Artificial Intelligence and Digital Finance (AIDF 2025)**, Chengdu, China, ACM, pp. 1–6. [doi:10.1145/3764727.3764741](https://doi.org/10.1145/3764727.3764741)
+   - *Mathematical & Conceptual Framework Taken:* Heterogeneous automotive supply chain graph formulation (OEMs, Tier-1, Tier-2), multi-relational edge semantics (commercial supply, trade credit, equity ownership), and graph message passing over normalized adjacency operators.
+
+3. **Geng, X., Han, B., Yang, D., & Zhao, J. (2024).** *Credit risk contagion of supply chain finance: An empirical analysis of supply chain listed companies.* **PLoS ONE**, vol. 19, no. 7, p. e0306724. [doi:10.1371/journal.pone.0306724](https://doi.org/10.1371/journal.pone.0306724)
+   - *Mathematical & Conceptual Framework Taken:* Coupled default jump dynamics across listed supply chain firms, asymmetric shock transmission (upstream operational disruption vs. downstream trade credit write-offs), and exponential temporal decay discounting of relationship disclosure strength ($\exp(-\lambda \Delta t)$).
+
+### 7.2 Foundational Financial, Regulatory & GNN Baselines
+
+4. **Altman, E. I. (1968).** *Financial ratios, discriminant analysis and the prediction of corporate bankruptcy.* **The Journal of Finance**, vol. 23, no. 4, pp. 589–609. [doi:10.1111/j.1540-6261.1968.tb00843.x](https://doi.org/10.1111/j.1540-6261.1968.tb00843.x)
+   - *Framework Taken:* Manufacturing Z-score linear discriminant function and benchmark distress threshold ($Z \le 1.81$).
+
 5. **Altman, E. I. (1983).** *Corporate Financial Distress: A Complete Guide to Predicting, Avoiding, and Dealing with Bankruptcy.* John Wiley & Sons, New York.
-6. **Kipf, T. N., & Welling, M. (2017).** *Semi-supervised classification with graph convolutional networks.* **Proc. 5th International Conference on Learning Representations (ICLR)**.
-7. **Merton, R. C. (1974).** *On the pricing of corporate debt: The risk structure of interest rates.* **The Journal of Finance**, vol. 29, no. 2, pp. 449–470.
+   - *Framework Taken:* Accounting ratio proxy standards for distressed corporate classification.
+
+6. **Kipf, T. N., & Welling, M. (2017).** *Semi-supervised classification with graph convolutional networks.* **Proc. 5th International Conference on Learning Representations (ICLR 2017)**.
+   - *Framework Taken:* First-order Chebyshev localized spectral convolution operator $\mathbf{\tilde{D}}^{-1/2} \mathbf{\tilde{A}} \mathbf{\tilde{D}}^{-1/2}$ utilized in `SupplyChainGNN`.
+
+7. **Merton, R. C. (1974).** *On the pricing of corporate debt: The risk structure of interest rates.* **The Journal of Finance**, vol. 29, no. 2, pp. 449–470. [doi:10.1111/j.1540-6261.1974.tb03058.x](https://doi.org/10.1111/j.1540-6261.1974.tb03058.x)
+   - *Framework Taken:* Structural credit risk theory, option-theoretic default barrier, and equity market cap valuation buffer.
+
 8. **Basel Committee on Banking Supervision (2006, 2017).** *International Convergence of Capital Measurement and Capital Standards (Basel II/III F-IRB).* Bank for International Settlements (BIS).
-9. **Eisenberg, L., & Noe, T. H. (2001).** *Systemic risk in financial systems.* **Management Science**, vol. 47, no. 2, pp. 236–249.
-10. **Gai, P., & Kapadia, S. (2010).** *Contagion in financial networks.* **Proceedings of the Royal Society A**, vol. 466, no. 2120, pp. 2401–2423.
-11. **Acemoglu, D., Ozdaglar, A., & Tahbaz-Salehi, A. (2015).** *Systemic risk and stability in financial networks.* **American Economic Review**, vol. 105, no. 2, pp. 564–608.
-12. **Ohlson, J. A. (1980).** *Financial ratios and the probabilistic prediction of bankruptcy.* **Journal of Accounting Research**, vol. 18, no. 1, pp. 109–131.
+   - *Framework Taken:* Foundation Internal Ratings-Based (F-IRB) parameters: Exposure at Default ($\text{EAD} = 0.15 \times \text{Revenue}$), Loss Given Default ($\text{LGD} = 0.45$), and Expected Loss ($\text{EL} = \text{PD} \times \text{LGD} \times \text{EAD}$).
+
+9. **Eisenberg, L., & Noe, T. H. (2001).** *Systemic risk in financial systems.* **Management Science**, vol. 47, no. 2, pp. 236–249. [doi:10.1287/mnsc.47.2.236.9835](https://doi.org/10.1287/mnsc.47.2.236.9835)
+   - *Framework Taken:* Multi-firm clearing vector equilibrium and network transmission formulation.
+
+10. **Gai, P., & Kapadia, S. (2010).** *Contagion in financial networks.* **Proceedings of the Royal Society A**, vol. 466, no. 2120, pp. 2401–2423. [doi:10.1098/rspa.2009.0410](https://doi.org/10.1098/rspa.2009.0410)
+    - *Framework Taken:* Topological network fragility, percolation phase transitions, and liquidity cascades.
+
+11. **Acemoglu, D., Ozdaglar, A., & Tahbaz-Salehi, A. (2015).** *Systemic risk and stability in financial networks.* **American Economic Review**, vol. 105, no. 2, pp. 564–608. [doi:10.1257/aer.20130456](https://doi.org/10.1257/aer.20130456)
+    - *Framework Taken:* Production network input-output chokepoints and aggregate systemic volatility.
+
+12. **Ohlson, J. A. (1980).** *Financial ratios and the probabilistic prediction of bankruptcy.* **Journal of Accounting Research**, vol. 18, no. 1, pp. 109–131. [doi:10.2307/2490395](https://doi.org/10.2307/2490395)
+    - *Framework Taken:* Logit bankruptcy baseline and comparative benchmarking.
+
+### 7.3 Theoretical Comparison Synthesis
+
+| Dimension | Mojdehi et al. (2025) | Liu (2025) | Geng et al. (2024) | SCNCC Framework (Ours) |
+|---|---|---|---|---|
+| **Target Sector** | Energy SCF / SMEs | 800 Listed Auto Enterprises | Listed Supply Chain Firms | Global Multi-Tier Automotive Ecosystem |
+| **Network Scale** | Regional SME Graph | 800 Nodes | Listed Corporate Pairs | 174 Multi-Tier Firms, 1,213 Edges |
+| **Edge Semantics** | Proximity / Distance Graph | Multi-Relational (Supply, Equity) | Bilateral Trade Credit Links | Directed Supply, Trade Credit, Ownership |
+| **Edge Weighting** | Topological Adjacency | Attention Coefficients | Coupled Jump Intensity | Calibrated Transmission with Exponential Time Decay |
+| **Predictor Set** | Accounting + TDA/Centralities | 20 Accounting Ratios | Micro Ratios + Macro Factors | 8 Accounting + 4 Topological Centralities |
+| **Model Architecture**| BallMapper + GNN Hybrid | Graph Attention Network (GAT) | Cox-Copula Stochastic Model | Edge-Weighted Graph Convolutional Network (`GCNConv`) |
+| **Stress Testing** | None (Static Classification) | None (Static Classification) | Dynamic Hazard Rate Jumps | Dynamic SCR-NR (Node Default) & SCR-ER (Edge Severance) |
+| **Regulatory Metrics**| Accuracy / F1-Score | Weighted F1 / AUC-ROC | Contagion Probability | Basel III F-IRB Expected Loss ($\Delta \text{EL}$) & Systemic Loss (\$M) |

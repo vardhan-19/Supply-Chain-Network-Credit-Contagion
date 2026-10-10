@@ -4,7 +4,13 @@ import os
 
 def build_graph(csv_path):
     """
-    Constructs a NetworkX DiGraph from the supply chain CSV data.
+    Constructs a NetworkX DiGraph from the automotive supply chain CSV data.
+    
+    Academic Foundations:
+    - Multi-Relational Enterprise Graph: Liu (ACM AIDF 2025) formulation of automotive
+      supply chain graphs spanning commercial supply flows, trade credit, and equity ownership.
+    - Bilateral Trade Credit Exposure: Geng, Han, Yang, & Zhao (PLoS ONE 2024) modeling of
+      accounts receivable exposure and transaction proportion weighting.
     """
     df = pd.read_csv(csv_path)
     
