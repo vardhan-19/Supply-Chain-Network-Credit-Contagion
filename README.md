@@ -50,7 +50,9 @@ graph TD
 ### 3.1 Ground Truth Default Formulation (Altman Z)
 Ground truth financial distress is established via Altman's (1968) manufacturing formulation:
 
-$$Z = 1.2 X_1 + 1.4 X_2 + 3.3 X_3 + 0.6 X_4 + 1.0 X_5$$
+$$
+Z = 1.2 X_1 + 1.4 X_2 + 3.3 X_3 + 0.6 X_4 + 1.0 X_5
+$$
 
 Where:
 - $X_1 = \text{Working Capital} / \text{Total Assets}$ (Short-term liquidity)
@@ -66,20 +68,51 @@ Where:
 ### 3.2 Transmission Weight & Temporal Decay ($w_{ij}$)
 The edge contagion transmission coefficient $w_{ij} \in [0, 1]$ models the proportion of economic distress propagated from supplier $i$ to buyer $j$:
 
-$$\text{financial\_weight} = \frac{\ln(1 + \text{credit\_amount\_usd})}{\max(\ln(1 + \text{credit\_amount\_usd}))}$$
+$$
+C_{ij}^* = \frac{\ln(1 + C_{ij})}{\max_{(u,v)} \ln(1 + C_{uv})}
+$$
 
-$$\text{transmission\_score} = \text{confidence} + 1.0 \times \text{ownership\_bonus} + 0.5 \times \text{financial\_weight}$$
+$$
+S_{ij} = \text{Confidence}_{ij} + 1.0 \cdot \text{Ownership}_{ij} + 0.5 \cdot C_{ij}^*
+$$
 
-$$\text{temporal\_decay} = \exp(-0.2 \times (2025 - \text{year}))$$
+$$
+D_{ij} = \exp\left(-0.20 \times (2025 - t_{ij})\right)
+$$
 
-$$w_{ij} = \text{MinMaxNormalize}(\text{transmission\_score} \times \text{temporal\_decay})$$
+$$
+w_{ij} = \text{Normalize}\left(S_{ij} \times D_{ij}\right)
+$$
+
+Where:
+- $C_{ij}$: Bilateral trade credit volume (USD)
+- $S_{ij}$: Commercial dependency transmission score
+- $D_{ij}$: Temporal recency decay factor ($t_{ij} \in [2020, 2025]$)
+- $w_{ij}$: Min-max normalized contagion propagation weight in $[0, 1]$
 
 ### 3.3 Basel III Credit Risk & Systemic Expected Loss
-- **Exposure at Default (EAD):** Standard Basel turnover proxy: $\text{EAD}_i = 0.15 \times \text{Revenue}_i$
-- **Loss Given Default (LGD):** Senior unsecured recovery calibration: $\text{LGD} = 0.45$
-- **Expected Loss (EL):** $\text{EL}_i = \text{PD}_i \times \text{LGD} \times \text{EAD}_i$
-- **Systemic Risk Contribution ($\Delta \text{EL}$):** Net dollar distress transmitted downstream:
-  $$\Delta \text{EL}_{\text{systemic}} = \sum_{k \neq \text{target}} \max(0, \, \text{EL}_k^{\text{shocked}} - \text{EL}_k^{\text{baseline}})$$
+
+Under the Basel Foundation Internal Ratings-Based (F-IRB) framework:
+
+- **Exposure at Default (EAD):** Standard turnover proxy calibrated to operating scale:
+$$
+\text{EAD}_i = 0.15 \times \text{Revenue}_i
+$$
+
+- **Loss Given Default (LGD):** Senior unsecured recovery calibration:
+$$
+\text{LGD} = 0.45
+$$
+
+- **Baseline Expected Loss (EL):**
+$$
+\text{EL}_i = \text{PD}_i \times \text{LGD} \times \text{EAD}_i
+$$
+
+- **Systemic Risk Contribution ($\Delta \text{EL}$):** Net incremental dollar distress transmitted downstream:
+$$
+\Delta \text{EL}_{\text{systemic}} = \sum_{k \neq \text{target}} \max\left(0, \; \text{EL}_k^{\text{shocked}} - \text{EL}_k^{\text{baseline}}\right)
+$$
 
 ---
 

@@ -97,14 +97,14 @@ Ground truth default supervision labels are derived from Altman's (1968) manufac
 $$Z_i = 1.2 X_{i,1} + 1.4 X_{i,2} + 3.3 X_{i,3} + 0.6 X_{i,4} + 1.0 X_{i,5}$$
 
 Where the standardized financial ratios are computed via robust corporate proxies:
-- **Total Assets Proxy:** $\text{TA}_i = \text{total\_debt}_i + \text{market\_cap}_i$
-- **Working Capital Proxy:** $\text{WC}_i = (\text{current\_ratio}_i - 1.0) \times (0.40 \cdot \text{total\_debt}_i)$
-- **Retained Earnings Proxy:** $\text{RE}_i = 0.50 \cdot \text{profit\_margin}_i \cdot \text{revenue}_i$ (Fallback: $0.50 \cdot \text{roa}_i \cdot \text{TA}_i$)
-- **Operating Income Proxy:** $\text{EBIT}_i = \frac{\text{profit\_margin}_i \cdot \text{revenue}_i}{0.65}$ (Fallback: $\frac{\text{roa}_i \cdot \text{TA}_i}{0.65}$)
-- **Total Debt (Liabilities):** $\text{TL}_i = \text{total\_debt}_i$
+- **Total Assets Proxy:** $\text{TA}_i = \text{Debt}_i + \text{MarketCap}_i$
+- **Working Capital Proxy:** $\text{WC}_i = (\text{CurrentRatio}_i - 1.0) \times (0.40 \cdot \text{Debt}_i)$
+- **Retained Earnings Proxy:** $\text{RE}_i = 0.50 \cdot \text{ProfitMargin}_i \cdot \text{revenue}_i$ (Fallback: $0.50 \cdot \text{roa}_i \cdot \text{TA}_i$)
+- **Operating Income Proxy:** $\text{EBIT}_i = \frac{\text{ProfitMargin}_i \cdot \text{revenue}_i}{0.65}$ (Fallback: $\frac{\text{roa}_i \cdot \text{TA}_i}{0.65}$)
+- **Total Debt (Liabilities):** $\text{TL}_i = \text{Debt}_i$
 
 The 5 component ratios are:
-$$X_{i,1} = \frac{\text{WC}_i}{\text{TA}_i}, \quad X_{i,2} = \frac{\text{RE}_i}{\text{TA}_i}, \quad X_{i,3} = \frac{\text{EBIT}_i}{\text{TA}_i}, \quad X_{i,4} = \frac{\text{market\_cap}_i}{\text{total\_debt}_i}, \quad X_{i,5} = \frac{\text{revenue}_i}{\text{TA}_i}$$
+$$X_{i,1} = \frac{\text{WC}_i}{\text{TA}_i}, \quad X_{i,2} = \frac{\text{RE}_i}{\text{TA}_i}, \quad X_{i,3} = \frac{\text{EBIT}_i}{\text{TA}_i}, \quad X_{i,4} = \frac{\text{MarketCap}_i}{\text{Debt}_i}, \quad X_{i,5} = \frac{\text{revenue}_i}{\text{TA}_i}$$
 
 #### Binary Supervision Classification
 Following classical credit distress benchmarks:
@@ -156,10 +156,10 @@ $$\tilde{x}_{i, k} = \frac{x_{i, k} - \mu_{k, \text{train}}}{\sigma_{k, \text{tr
 
 ### 2.4 Contagion Transmission Weight ($w_{ij}$) & Temporal Decay
 The continuous edge weight $w_{ij} \in [0, 1]$ represents the fraction of economic shock propagated across commercial link $(v_i, v_j)$:
-$$\text{financial\_weight}_{ij} = \frac{\ln(1 + \text{credit\_amount\_usd}_{ij})}{\max_{(u,v)} \ln(1 + \text{credit\_amount\_usd}_{uv})} \in [0, 1]$$
-$$\text{transmission\_score}_{ij} = \text{confidence}_{ij} + 1.0 \times \left(\frac{\text{ownership\_pct}_{ij}}{100.0}\right) + 0.5 \times \text{financial\_weight}_{ij}$$
-$$\text{decayed\_score}_{ij} = \text{transmission\_score}_{ij} \times \exp\left(-0.20 \times (2025 - \text{year}_{ij})\right)$$
-$$w_{ij} = \frac{\text{decayed\_score}_{ij} - \min(\text{decayed\_score})}{\max(\text{decayed\_score}) - \min(\text{decayed\_score})}$$
+$$C^*_{ij} = \frac{\ln(1 + C_{ij})}{\max_{(u,v)} \ln(1 + C_{uv})} \in [0, 1]$$
+$$S_{ij} = \text{confidence}_{ij} + 1.0 \times \left(\frac{\text{Ownership}_{ij}}{100.0}\right) + 0.5 \times C^*_{ij}$$
+$$\tilde{S}_{ij} = S_{ij} \times \exp\left(-0.20 \times (2025 - \text{year}_{ij})\right)$$
+$$w_{ij} = \frac{\tilde{S}_{ij} - \min(\tilde{S})}{\max(\tilde{S}) - \min(\tilde{S})}$$
 
 - **Logarithmic Compression:** Prevents multi-billion dollar OEM contracts from numerically overwhelming smaller critical component links.
 - **Exponential Time Decay:** $\exp(-0.20 \times \Delta t)$ smoothly discounts stale supply disclosures (halving weight every ~3.5 years).
@@ -188,7 +188,7 @@ $$\mathbf{H}^{(2)} = \text{ReLU}\left( \mathbf{\tilde{D}}^{-\frac{1}{2}} \mathbf
 $$\mathbf{H}^{(3)} = \text{Dropout}_{p=0.5}\left(\mathbf{H}^{(2)}\right)$$
 $$\mathbf{H}^{(4)} = \mathbf{\tilde{D}}^{-\frac{1}{2}} \mathbf{\tilde{A}} \mathbf{\tilde{D}}^{-\frac{1}{2}} \mathbf{H}^{(3)} \mathbf{\Theta}_2 \in \mathbb{R}^{174 \times 32}$$
 $$\mathbf{Z} = \mathbf{H}^{(4)} \mathbf{W}_{\text{out}} + \mathbf{b}_{\text{out}} \in \mathbb{R}^{174 \times 2}$$
-$$\log \hat{\mathbf{P}}_i = \text{log\_softmax}(\mathbf{Z}_i) = \left[ \ln\frac{\exp(Z_{i,0})}{\sum_{c=0}^1 \exp(Z_{i,c})}, \; \ln\frac{\exp(Z_{i,1})}{\sum_{c=0}^1 \exp(Z_{i,c})} \right]$$
+$$\log \hat{\mathbf{P}}_i = \log \operatorname{softmax}(\mathbf{Z}_i) = \left[ \ln\frac{\exp(Z_{i,0})}{\sum_{c=0}^1 \exp(Z_{i,c})}, \; \ln\frac{\exp(Z_{i,1})}{\sum_{c=0}^1 \exp(Z_{i,c})} \right]$$
 
 The calibrated **Probability of Default ($\text{PD}_i$)** is extracted via:
 $$\text{PD}_i = \exp(\log \hat{P}_{i, 1}) = \frac{\exp(Z_{i,1})}{\exp(Z_{i,0}) + \exp(Z_{i,1})} \in (0, 1)$$
